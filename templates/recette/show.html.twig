@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recette{% endblock %}
+
+{% block body %}
+    <h1>Recette</h1>
+<div class="container">
+    <div class="row bg-light">
+        <div class="col-6 p-5">
+            <img src="{{ recette.cover }}" alt="Image principale">
+        </div>
+        <div class="col-6 p-5">
+            <h3 class="align-content-center">Ingrédients</h3>
+            {% for ingredient in ingredients %}
+            <p>
+               {{ ingredient.title }}
+            </p>
+
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+    <a href="{{ path('recette_index') }}">back to list</a>
+
+    <a href="{{ path('recette_edit', {'slug': recette.slug}) }}">edit</a>
+
+    {{ include('recette/_delete_form.html.twig') }}
+{% endblock %}

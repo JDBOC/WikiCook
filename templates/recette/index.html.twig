@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recette index{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <h1>Recettes</h1>
+<div class="row">
+{% for recipe in recettes %}
+<div class="col-lg-3 m-4">
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{ recipe.cover }}" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">{{ recipe.title }}</h5>
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Catégorie {{ recipe.categorie }}</li>
+            <li class="list-group-item">{{ recipe.difficulte }}</li>
+            <li class="list-group-item">{{ recipe.auteur }}</li>
+        </ul>
+
+            <a href="{{ path('recette_show', {'slug': recipe.slug}) }}">show</a>
+            <a href="{{ path('recette_edit', {'slug': recipe.slug}) }}">edit</a>
+        </div>
+    </div>
+</div>
+    {% endfor %}
+
+</div>
+    <a href="{{ path('recette_new') }}">Create new</a>
+    </div>
+{% endblock %}
