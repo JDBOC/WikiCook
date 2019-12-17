@@ -47,4 +47,5 @@ class IngredientRepository extends ServiceEntityRepository
         ;
     }
     */
+
 }

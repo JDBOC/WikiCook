@@ -3,30 +3,36 @@
 {% block title %}Recette index{% endblock %}
 
 {% block body %}
-    <div class="container">
+  <div class="container">
     <h1>Recettes</h1>
-<div class="row">
-{% for recipe in recettes %}
-<div class="col-lg-3 m-4">
-    <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src="{{ recipe.cover }}" alt="Card image cap">
-        <div class="card-body">
-            <h5 class="card-title">{{ recipe.title }}</h5>
+    <div class="row">
+      {% for recette in recettes %}
+        <div class="col-lg-3 m-4">
+          <div class="card" style="width: 18rem;">
+            <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
+              <img class="card-img-top" src="{{ recette.cover }}" alt="Card image cap">
+            </a>
+            <div class="card-body">
+              <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
+                <h5 class="card-title">{{ recette.title }}</h5>
+              </a>
+              <ul class="list-group list-group-flush">
+                {% if recette.categorie is not null %}
+                  <li class="list-group-item"><strong> {{ recette.categorie.title }}</strong></li>
+                {% endif %}
+                <li class="list-group-item">{{ recette.difficulte }}</li>
+                <li class="list-group-item">{{ recette.auteur }}</li>
+              </ul>
 
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Catégorie {{ recipe.categorie }}</li>
-            <li class="list-group-item">{{ recipe.difficulte }}</li>
-            <li class="list-group-item">{{ recipe.auteur }}</li>
-        </ul>
+              <a href="{{ path('recette_show', {'slug': recette.slug}) }}">show</a>
+              <a href="{{ path('recette_edit', {'slug': recette.slug}) }}">edit</a>
 
-            <a href="{{ path('recette_show', {'slug': recipe.slug}) }}">show</a>
-            <a href="{{ path('recette_edit', {'slug': recipe.slug}) }}">edit</a>
+            </div>
+          </div>
         </div>
-    </div>
-</div>
-    {% endfor %}
+      {% endfor %}
 
-</div>
-    <a href="{{ path('recette_new') }}">Create new</a>
     </div>
+    <a href="{{ path('recette_new') }}">Create new</a>
+  </div>
 {% endblock %}

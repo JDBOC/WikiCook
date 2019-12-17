@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Categorie;
 use App\Entity\Etape;
 use App\Entity\Ingredient;
 use App\Entity\Recette;
@@ -22,8 +23,9 @@ class AppFixtures extends Fixture
         $title = $faker->word;
         $slug = $slugify->slugify ( $title );
         $recette->setTitle ($title)
-          ->setCover ('https://loremflickr.com/320/240/recipe')
+          ->setCover ('https://loremflickr.com/520/340/recipe')
           ->setAuteur ($faker->name)
+          ->setNombre (4)
           ->setSlug ($slug)
           ->setDifficulte (mt_rand (1, 5));
         $manager->persist ($recette);
@@ -39,11 +41,18 @@ class AppFixtures extends Fixture
         for ($k = 0; $k<=10; $k++){
           $ingredient = new Ingredient();
           $ingredient->setTitle ($faker->word)
-                      ->setQuantite (mt_rand (3, 12));
+                      ->setQuantite (mt_rand (3, 12))
+                      ->setRecette ($recette);
           $manager->persist ($ingredient);
           }
 
     }
+      $cat = array("Entrée", "Plat principal", "Dessert", "Encas", "Ptit déj");
+      foreach ($cat as $value){
+        $categorie = new Categorie();
+        $categorie->setTitle ($value);
+        $manager->persist ($categorie);
+      }
 
         $manager->flush();
     }

@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Recette;
 use App\Form\RecetteType;
+use App\Entity\Ingredient;
+use App\Repository\EtapeRepository;
 use App\Repository\IngredientRepository;
 use App\Repository\RecetteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,6 +40,18 @@ class RecetteController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
           $recette->initializeSlug ();
             $entityManager = $this->getDoctrine()->getManager();
+
+            foreach ($recette->getIngredient () as $ingredients) {
+              $ingredients -> setRecette ($recette);
+              $entityManager->persist ($ingredients);
+            }
+
+            foreach ($recette->getEtape () as $etape) {
+              $etape -> setRecette ($recette);
+              $entityManager -> persist ($etape);
+            }
+
+
             $entityManager->persist($recette);
             $entityManager->flush();
 
@@ -46,19 +60,23 @@ class RecetteController extends AbstractController
 
         return $this->render('recette/new.html.twig', [
             'recette' => $recette,
-            'form' => $form->createView(),
+            'form' => $form->createView (),
         ]);
     }
 
-    /**
-     * @Route("/{slug}", name="recette_show", methods={"GET"})
-     */
-    public function show(Recette $recette, IngredientRepository $ingredientRepository): Response
+  /**
+   * @Route("/{slug}", name="recette_show", methods={"GET"})
+   * @param Recette $recette
+   * @param IngredientRepository $ingredientRepository
+   * @return Response
+   */
+    public function show(Recette $recette, IngredientRepository $ingredientRepository, EtapeRepository $etapeRepository): Response
     {
-      $ingredients = $ingredientRepository->findByRecettes ($recette);
+
         return $this->render('recette/show.html.twig', [
             'recette' => $recette,
-            'ingredients' => $ingredients
+            'ingredients' => $ingredientRepository->findByRecette ($recette),
+            'etapes' => $etapeRepository->findByRecette ($recette)
         ]);
     }
 
@@ -71,9 +89,23 @@ class RecetteController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager = $this->getDoctrine()->getManager();
 
-            return $this->redirectToRoute('recette_index');
+          foreach ($recette->getIngredient () as $ingredients) {
+            $ingredients -> setRecette ($recette);
+            $entityManager->persist ($ingredients);
+          }
+
+          foreach ($recette->getEtape () as $etape) {
+            $etape -> setRecette ($recette);
+            $entityManager -> persist ($etape);
+          }
+
+          $entityManager->flush ();
+
+            return $this->redirectToRoute('recette_show', [
+              'slug' => $recette->getSlug ()
+            ]);
         }
 
         return $this->render('recette/edit.html.twig', [
@@ -82,9 +114,12 @@ class RecetteController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{slug}", name="recette_delete", methods={"DELETE"})
-     */
+  /**
+   * @Route("/{slug}", name="recette_delete", methods={"DELETE"})
+   * @param Request $request
+   * @param Recette $recette
+   * @return Response
+   */
     public function delete(Request $request, Recette $recette): Response
     {
         if ($this->isCsrfTokenValid('delete'.$recette->getId(), $request->request->get('_token'))) {

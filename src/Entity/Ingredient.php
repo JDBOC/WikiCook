@@ -24,19 +24,15 @@ class Ingredient
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $quantite;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Recette", mappedBy="ingredient")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Recette", inversedBy="ingredient")
      */
-    private $recettes;
+    private $recette;
 
-    public function __construct()
-    {
-        $this->recettes = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -67,31 +63,17 @@ class Ingredient
         return $this;
     }
 
-    /**
-     * @return Collection|Recette[]
-     */
-    public function getRecettes(): Collection
+    public function getRecette(): ?Recette
     {
-        return $this->recettes;
+        return $this->recette;
     }
 
-    public function addRecette(Recette $recette): self
+    public function setRecette(?Recette $recette): self
     {
-        if (!$this->recettes->contains($recette)) {
-            $this->recettes[] = $recette;
-            $recette->addIngredient($this);
-        }
+        $this->recette = $recette;
 
         return $this;
     }
 
-    public function removeRecette(Recette $recette): self
-    {
-        if ($this->recettes->contains($recette)) {
-            $this->recettes->removeElement($recette);
-            $recette->removeIngredient($this);
-        }
 
-        return $this;
-    }
 }
