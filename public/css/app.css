@@ -12,8 +12,10 @@ body {
 .infos {
     color: darkred;
 }
-
+.jumbo{
+    opacity: 0.8;
+}
 .bginfos{
-    background-color: darkgoldenrod;
+    background-color: darksalmon;
     align-items: self-end;
 }

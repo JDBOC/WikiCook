@@ -56,7 +56,9 @@
         <br>
         <div class="row bginfos p-1 rounded">
           {% if recette.categorie is not null %}
-            <div class="col-3 text-white text-center">{{ recette.categorie.title }}</div>
+
+            <div class="col-3 text-white text-center"><i class="fa fa-cutlery"></i> <span class="infos"> {{ recette.categorie.title }}</span></div>
+
           {% endif %}
           <div class="col-3 text-white text-center">Difficulté
             <span class="infos">{{ recette.difficulte }}</span></div>
