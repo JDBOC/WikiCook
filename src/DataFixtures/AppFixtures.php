@@ -56,7 +56,7 @@ $categories = [];
         $user ->setSurnom ( $faker->firstName ( $genre ) )
               ->setEmail ( $faker->email )
               ->setHash ( $hash )
-              ->setDescription ($faker->paragraph (3))
+              ->setDescription ('<p>' . join ( '</p><p>' , $faker->paragraphs ( 3 ) ) . '</p>')
               ->setPicture ($picture);
 
         $manager->persist ( $user );
