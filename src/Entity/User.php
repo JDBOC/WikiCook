@@ -66,6 +66,11 @@ class User implements UserInterface
      */
     private $recettes;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
   /**
    * génération auto du slug
    *
@@ -206,5 +211,17 @@ class User implements UserInterface
     public function eraseCredentials()
     {
       // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
     }
 }

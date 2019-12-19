@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -19,6 +20,7 @@ class RegistrationType extends CommonType
             ->add('surnom', TextType::class, $this->getConfig (" ","Votre Surnom"))
             ->add('email', EmailType::class, $this->getConfig (" ","Indiquez une adresse mail"))
             ->add('picture', UrlType::class, $this->getConfig (" ", "Indiquez l'url de votre photo"))
+            ->add ('description', TextareaType::class, $this->getConfig ("description", "Description optionnelle"))
             ->add('hash', PasswordType::class, $this->getConfig (" ", "Indiquez un mot de passe"))
             ->add ('passwordConfirm', PasswordType::class, $this->getConfig (" ", "Confirmez votre mot de passe"))
 
