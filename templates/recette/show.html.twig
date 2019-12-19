@@ -12,27 +12,29 @@
           <div class="col-lg-7">
             <h1 class="text-center p-lg-5">{{ recette.title }}</h1>
             <img src="{{ recette.cover }}" class="img-thumbnail img-fluid" alt="Image principale">
-            <div class="col-lg-6">
-              <div class="row align-items-lg-start">
-                <div class="col-6 mt-lg-3">
+
+<div class="row m-lg-4 align-items-md-end">
+                <div class="col-4">
                   <img src="{{ recette.author.picture }}" alt="Avatar de {{ recette.author.surnom }}"
                        class="rounded-circle">
                 </div>
-                <div class="col-6 mt-lg-3">
-                  <p class="badge badge-dark">{{ recette.author.recettes | length }}
-                    {% if recette.author.recettes | length >1 %}
+                <div class="col-lg-2">
+                  <p class=""><strong>{{ recette.author.surnom }}</strong></p>
+                  <p class="badge badge-dark text-center">{{ recette.author.recettes | length }}
+                    {% if recette.author.recettes | length > 1 %}
                       contributions
                     {% else %}
                       contribution
                     {% endif %}
                   </p>
-                  <br>
+
+
+
                 </div>
-              </div>
-                  <div class="col-lg-6 text-center">
-                    <p class="text-center"><strong>{{ recette.author.surnom }}</strong></p>
-                  </div>
-            </div>
+          </div>
+
+
+
           </div>
           <div class="col-lg-5 p-5">
             <table class="table">
