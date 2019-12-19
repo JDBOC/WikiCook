@@ -10,9 +10,10 @@ body {
 }
 
 .infos {
-    color: darkseagreen;
+    color: darkred;
 }
 
 .bginfos{
     background-color: darkgoldenrod;
+    align-items: self-end;
 }

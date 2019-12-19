@@ -13,21 +13,21 @@
             <h1 class="text-center p-lg-5">{{ recette.title }}</h1>
             <img src="{{ recette.cover }}" class="img-thumbnail img-fluid" alt="Image principale">
 
-<div class="row m-lg-4 align-items-md-end">
-                <div class="col-4">
+<div class="row m-4 justify-content-center">
+                <div class="col-lg-4">
                   <img src="{{ recette.author.picture }}" alt="Avatar de {{ recette.author.surnom }}"
                        class="rounded-circle">
                 </div>
                 <div class="col-lg-2">
-                  <p class=""><strong>{{ recette.author.surnom }}</strong></p>
-                  <p class="badge badge-dark text-center">{{ recette.author.recettes | length }}
+                  <p class=""><strong>{{ recette.author.surnom }}</strong>
+                  <span class="badge badge-dark text-center">{{ recette.author.recettes | length }}
                     {% if recette.author.recettes | length > 1 %}
                       contributions
                     {% else %}
                       contribution
                     {% endif %}
+                  </span>
                   </p>
-
 
 
                 </div>
@@ -58,12 +58,12 @@
           {% if recette.categorie is not null %}
             <div class="col-3 text-white text-center">{{ recette.categorie.title }}</div>
           {% endif %}
-          <div class="col-3 text-white text-center">Difficulté <span
-                    class="infos font-weight-bold">{{ recette.difficulte }}</span></div>
-          <div class="col-3 text-white text-center">Durée <span class="infos font-weight-bold">{{ recette.id }}</span>
+          <div class="col-3 text-white text-center">Difficulté
+            <span class="infos">{{ recette.difficulte }}</span></div>
+          <div class="col-3 text-white text-center"><i class="fa fa-clock-o" aria-hidden="true"></i> <span class="infos">  {{ recette.id }}</span>
             minutes
           </div>
-          <div class="col-3 text-white text-center"><span class="infos">{{ recette.nombre }}</span> personnes</div>
+          <div class="col-3 text-white text-center"><span class="fa fa-group"></span><span class="infos">  {{ recette.nombre }}</span> personnes</div>
         </div>
         <br>
         <div class="row bg-light rounded p-lg-5">
