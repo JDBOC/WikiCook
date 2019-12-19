@@ -8,6 +8,9 @@ use App\Entity\Ingredient;
 use App\Repository\EtapeRepository;
 use App\Repository\IngredientRepository;
 use App\Repository\RecetteRepository;
+use Doctrine\Persistence\ObjectManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,9 +21,11 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class RecetteController extends AbstractController
 {
-    /**
-     * @Route("/", name="recette_index", methods={"GET"})
-     */
+  /**
+   * @Route("/", name="recette_index", methods={"GET"})
+   * @param RecetteRepository $recetteRepository
+   * @return Response
+   */
     public function index(RecetteRepository $recetteRepository): Response
     {
         return $this->render('recette/index.html.twig', [
@@ -30,15 +35,18 @@ class RecetteController extends AbstractController
 
     /**
      * @Route("/new", name="recette_new", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
      */
     public function new(Request $request): Response
     {
         $recette = new Recette();
+        $user = $this->getUser ();
         $form = $this->createForm(RecetteType::class, $recette);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
           $recette->initializeSlug ();
+          $recette->setAuthor ($user);
             $entityManager = $this->getDoctrine()->getManager();
 
             foreach ($recette->getIngredient () as $ingredients) {
@@ -68,6 +76,7 @@ class RecetteController extends AbstractController
    * @Route("/{slug}", name="recette_show", methods={"GET"})
    * @param Recette $recette
    * @param IngredientRepository $ingredientRepository
+   * @param EtapeRepository $etapeRepository
    * @return Response
    */
     public function show(Recette $recette, IngredientRepository $ingredientRepository, EtapeRepository $etapeRepository): Response
@@ -80,9 +89,13 @@ class RecetteController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{slug}/edit", name="recette_edit", methods={"GET","POST"})
-     */
+  /**
+   * @Route("/{slug}/edit", name="recette_edit", methods={"GET","POST"})
+   * @IsGranted("ROLE_USER")
+   * @param Request $request
+   * @param Recette $recette
+   * @return Response
+   */
     public function edit(Request $request, Recette $recette): Response
     {
         $form = $this->createForm(RecetteType::class, $recette);
@@ -116,6 +129,7 @@ class RecetteController extends AbstractController
 
   /**
    * @Route("/{slug}", name="recette_delete", methods={"DELETE"})
+   * @Security("is_granted('ROLE_USER') and user == ad.getAuthor()", message="vous ne pouvez pas modifier les annonces des autres utilisateurs")
    * @param Request $request
    * @param Recette $recette
    * @return Response

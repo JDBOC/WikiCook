@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+  <div class="container">
+    <div class="d-flex">
+    <div class="bg-light py-5 px-5 window">
+      <h2>Inscrivez vous sur WikiCook !</h2>
+      {{ form_start(form) }}
+      {{ form_widget(form) }}
+      <div>
+      <button type="submit" class="btn btn-success">Inscription</button>
+    </div>
+      {{ form_end(form) }}
+    </div>
+  </div>
+  </div>
+{% endblock %}
+
+{% block title %}Inscription{% endblock %}

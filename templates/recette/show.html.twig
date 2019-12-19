@@ -3,13 +3,15 @@
 {% block title %}{{ recette.title }}{% endblock %}
 
 {% block body %}
+<div class="m-lg-5"></div>
   <div class="container">
 
     <div class="col-lg-10">
-      <h1 class="text-center p-lg-5">{{ recette.title }}</h1>
 
-      <div class="row bg-light">
-        <div class="col-lg-6 align-items-center d-flex">
+
+      <div class="row bg-light rounded">
+        <div class="col-lg-6">
+          <h1 class="text-center p-lg-5">{{ recette.title }}</h1>
           <img src="{{ recette.cover }}" class="img-thumbnail img-fluid" alt="Image principale">
         </div>
         <div class="col-lg-6 p-5">
@@ -36,18 +38,18 @@
       </div>
 
     <br>
-    <div class="row bg-secondary rounded">
+    <div class="row bginfos p-1 rounded">
       {% if recette.categorie is not null %}
       <div class="col-3 text-white text-center">{{ recette.categorie.title }}</div>
       {% endif %}
-      <div class="col-3 text-white text-center">Difficulté : {{ recette.difficulte }}</div>
-      <div class="col-3 text-white text-center">Durée : {{ recette.id }} minutes</div>
+      <div class="col-3 text-white text-center">Difficulté <span class="infos font-weight-bold">{{ recette.difficulte }}</span></div>
+      <div class="col-3 text-white text-center">Durée <span class="infos font-weight-bold">{{ recette.id }}</span> minutes</div>
 
-      <div class="col-3 text-white text-center">Pour {{recette.nombre}} personnes</div>
+      <div class="col-3 text-white text-center"><span class="infos">{{recette.nombre}}</span> personnes</div>
     </div>
     <br>
 
-    <div class="row bg-light p-lg-5">
+    <div class="row bg-light rounded p-lg-5">
       <ol>
         {% for etape in etapes %}
           <li class="m-lg-3">{{ etape.description }}</li>
