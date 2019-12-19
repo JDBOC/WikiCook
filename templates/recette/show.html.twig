@@ -14,7 +14,9 @@
             <img src="{{ recette.cover }}" class="img-thumbnail img-fluid" alt="Image principale">
 
 <div class="row m-4 align-items-center">
+  <a href="{{ path('user_show', {'slug': recette.author.slug}) }}">
                 <div class="col-lg-4">
+
                   <img src="{{ recette.author.picture }}" alt="Avatar de {{ recette.author.surnom }}"
                        class="rounded-circle">
                 </div>
@@ -28,6 +30,7 @@
                     {% endif %}
                   </span>
                   </p>
+                  </a>
                 </div>
           </div>
           </div>
