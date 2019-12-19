@@ -21,7 +21,7 @@
                   <li class="list-group-item"><strong> {{ recette.categorie.title }}</strong></li>
                 {% endif %}
                 <li class="list-group-item">{{ recette.difficulte }}</li>
-                <li class="list-group-item">{{ recette.auteur }}</li>
+                <li class="list-group-item">{{ recette.author.surnom }}</li>
               </ul>
 
               <a href="{{ path('recette_show', {'slug': recette.slug}) }}">show</a>

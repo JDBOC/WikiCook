@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RecetteRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Recette
 {
@@ -63,6 +64,11 @@ class Recette
      * @ORM\Column(type="integer")
      */
     private $nombre;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="recettes")
+     */
+    private $author;
 
     public function __construct()
     {
@@ -233,6 +239,18 @@ class Recette
     public function setNombre(int $nombre): self
     {
         $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }

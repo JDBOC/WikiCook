@@ -2,4 +2,15 @@ body {
     background-image: url("../Images/red_berry_border.jpg");
     background-repeat: no-repeat;
     background-size: auto;
+
+}
+
+
+
+.infos {
+    color: darkseagreen;
+}
+
+.bginfos{
+    background-color: darkgoldenrod;
 }

@@ -2,21 +2,19 @@
 
 namespace App\Form;
 
-use App\Entity\Ingredient;
-use Doctrine\DBAL\Types\FloatType;
+use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class IngredientType extends CommonType
+class AccountType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', TextType::class, $this->getConfig ("","ingrédient"))
-
+            ->add('surnom')
+            ->add('email')
+            ->add('picture')
 
         ;
     }
@@ -24,7 +22,7 @@ class IngredientType extends CommonType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Ingredient::class,
+            'data_class' => User::class,
         ]);
     }
 }
