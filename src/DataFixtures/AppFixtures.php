@@ -31,6 +31,17 @@
       //gestion utilisateurs
       $users = [];
       $genres = ['male' , 'female'];
+      $cat = array("Entrée" , "Plat principal" , "Dessert" , "Encas" , "Ptit déj");
+
+$categories = [];
+      foreach ($cat as $value) {
+        $categorie = new Categorie();
+        $categorie->setTitle ( $value );
+
+        $manager->persist ( $categorie );
+        $categories [] = $categorie;
+      }
+
 
       for ($i = 1; $i <= 10; $i++) {
         $user = new User();
@@ -54,7 +65,7 @@
 
       for ($i = 0; $i <= 30; $i++) {
         $recette = new Recette();
-
+        $randomCat = $faker->randomElement ($categories);
         $title = $faker->word;
         $slug = $slugify->slugify ( $title );
 
@@ -63,6 +74,7 @@
         $recette->setTitle ( $title )
           ->setCover ( 'https://loremflickr.com/520/340/recipe' )
           ->setAuteur ( $faker->name )
+          ->setCategorie ($randomCat)
           ->setNombre ( 4 )
           ->setSlug ( $slug )
           ->setDifficulte ( mt_rand ( 1 , 5 ) )
@@ -85,13 +97,6 @@
           $manager->persist ( $ingredient );
         }
 
-      }
-      $cat = array("Entrée" , "Plat principal" , "Dessert" , "Encas" , "Ptit déj");
-
-      foreach ($cat as $value) {
-        $categorie = new Categorie();
-        $categorie->setTitle ( $value );
-        $manager->persist ( $categorie );
       }
 
       $manager->flush ();
