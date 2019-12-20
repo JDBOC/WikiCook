@@ -91,7 +91,7 @@ class RecetteController extends AbstractController
 
   /**
    * @Route("/{slug}/edit", name="recette_edit", methods={"GET","POST"})
-   * @Security("is_granted('ROLE_USER') and user == ad.getAuthor()", message="vous ne pouvez pas modifier les annonces des autres utilisateurs")
+   * @Security("is_granted('ROLE_USER') and user == recette.getAuthor()", message="vous ne pouvez pas modifier les annonces dont vous n'êtes pas l'auteur")
    * @param Request $request
    * @param Recette $recette
    * @return Response

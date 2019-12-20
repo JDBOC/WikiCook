@@ -7,17 +7,16 @@ use App\Entity\User;
 use App\Form\AccountType;
 use App\Form\PasswordUpdateType;
 use App\Form\RegistrationType;
-
-
 use App\Repository\RecetteRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class AccountController extends AbstractController
 {
@@ -76,6 +75,7 @@ class AccountController extends AbstractController
 
   /**
    * @Route("/account/profil", name="account_profil")
+   * @IsGranted("ROLE_USER")
    * @param Request $request
    * @return Response
    */
@@ -101,6 +101,7 @@ class AccountController extends AbstractController
 
   /**
    * @Route("/account/password-update", name="account_password")
+   * @IsGranted("ROLE_USER")
    * @param Request $request
    * @param UserPasswordEncoderInterface $encoder
    * @return Response
@@ -142,6 +143,7 @@ class AccountController extends AbstractController
    * profil utilisateur
    *
    * @Route("/account", name="account_index")
+   * @IsGranted("ROLE_USER")
    *
    * @return Response
    */

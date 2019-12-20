@@ -4,7 +4,7 @@
 
 {% block body %}
   <div class="container">
-    <h1>Recettes</h1>
+    <h1 class="text-center">Recettes</h1>
     <div class="row">
       {% for recette in recettes %}
         <div class="col-lg-3 m-4">
@@ -23,15 +23,18 @@
                 <li class="list-group-item">{{ recette.difficulte }}</li>
                 <li class="list-group-item">{{ recette.author.surnom }}</li>
               </ul>
-
-              <a href="{{ path('recette_show', {'slug': recette.slug}) }}">show</a>
-              <a href="{{ path('recette_edit', {'slug': recette.slug}) }}">edit</a>
-
+              <div class="row mt-2 p-2 justify-content-lg-between">
+                {% if app.user == recette.author %}
+                  <a href="{{ path('recette_edit', {'slug': recette.slug}) }}" class="btn btn-outline-danger"><i
+                            class="fa fa-file-text-o" aria-hidden="true"></i> Modifier</a>
+                {% endif %}
+                <a href="{{ path('recette_show', {'slug': recette.slug}) }}" class="btn btn-outline-dark"><i
+                          class="fa fa-eye" aria-hidden="true"></i> Consulter</a>
+              </div>
             </div>
           </div>
         </div>
       {% endfor %}
-
     </div>
     <a href="{{ path('recette_new') }}">Create new</a>
   </div>
