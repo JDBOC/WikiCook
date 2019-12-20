@@ -20,24 +20,31 @@
                 <img src="{{ recette.author.picture }}" alt="Avatar de {{ recette.author.surnom }}"
                      class="rounded-circle">
               </div>
-              <div class="offset-1"></div>
+
               <div class="col-lg-2 text-center">
                 <a href="{{ path('user_show', {'slug': recette.author.slug}) }}">
                   <p class=""><strong>{{ recette.author.surnom }}</strong>
-                    <span class="badge badge-dark text-center">{{ recette.author.recettes | length }}
+                    <span class="badge badge-pill badge-dark text-center">{{ recette.author.recettes | length }}
                       {% if recette.author.recettes | length > 1 %}
                         contributions
                       {% else %}
                         contribution
                       {% endif %}
-                  </span>
+                    </span>
                   </p>
                 </a>
               </div>
+              <div class="offset-lg-2"></div>
+              <div class="col-lg-4">
+                {% if app.user == recette.author %}
+                  <div class="row justify-content-lg-around">
+                  <a href="{{ path('recette_edit', {'slug': recette.slug}) }}" class="btn btn-outline-secondary">Modifier</a>
+                  <a href="{{ path('recette_delete', {'slug': recette.slug}) }}" class="btn btn-outline-danger" onclick="return confirm(`Etes vous sûr de vouloir supprimer cette recette`)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+              </div>
+                {% endif %}
+              </div>
             </div>
-            {% if app.user == recette.author %}
-              <a href="{{ path('recette_edit', {'slug': recette.slug}) }}" class="btn btn-primary">Modifier</a>
-            {% endif %}
+
 
           </div>
           <div class="col-lg-5 p-5">

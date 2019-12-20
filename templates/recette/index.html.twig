@@ -20,14 +20,18 @@
                 {% if recette.categorie is not null %}
                   <li class="list-group-item"><strong> {{ recette.categorie.title }}</strong></li>
                 {% endif %}
-                <li class="list-group-item">{{ recette.difficulte }}</li>
-                <li class="list-group-item">{{ recette.author.surnom }}</li>
+                <li class="list-group-item">Difficulté : {{ recette.difficulte }}</li>
+                <li class="list-group-item">Auteur : {{ recette.author.surnom }}</li>
               </ul>
-              <div class="row mt-2 p-2 justify-content-lg-between">
+              <div class="row mt-2 p-2 justify-content-lg-around">
                 {% if app.user == recette.author %}
-                  <a href="{{ path('recette_edit', {'slug': recette.slug}) }}" class="btn btn-outline-danger"><i
-                            class="fa fa-file-text-o" aria-hidden="true"></i> Modifier</a>
+
+                    <a href="{{ path('recette_edit', {'slug': recette.slug}) }}" class="btn btn-outline-secondary">Modifier</a>
+                  <a href="{{ path('recette_delete', {'slug': recette.slug}) }}" class="btn btn-outline-danger" onclick="return confirm(`Etes vous sûr de vouloir supprimer cette recette`)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+
+
                 {% endif %}
+
                 <a href="{{ path('recette_show', {'slug': recette.slug}) }}" class="btn btn-outline-dark"><i
                           class="fa fa-eye" aria-hidden="true"></i> Consulter</a>
               </div>

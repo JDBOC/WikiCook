@@ -8,7 +8,8 @@ use App\Entity\Ingredient;
 use App\Repository\EtapeRepository;
 use App\Repository\IngredientRepository;
 use App\Repository\RecetteRepository;
-use Doctrine\Persistence\ObjectManager;
+use Doctrine\Common\Persistence\ObjectManager;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -72,6 +73,7 @@ class RecetteController extends AbstractController
         ]);
     }
 
+
   /**
    * @Route("/{slug}", name="recette_show", methods={"GET"})
    * @param Recette $recette
@@ -88,6 +90,9 @@ class RecetteController extends AbstractController
             'etapes' => $etapeRepository->findByRecette ($recette)
         ]);
     }
+
+
+
 
   /**
    * @Route("/{slug}/edit", name="recette_edit", methods={"GET","POST"})
@@ -127,22 +132,26 @@ class RecetteController extends AbstractController
         ]);
     }
 
-
   /**
-   * @Route("/{slug}", name="recette_delete", methods={"DELETE"})
-   * @Security("is_granted('ROLE_USER') and user == ad.getAuthor()", message="vous ne pouvez pas supprimer cette annonce")
-   * @param Request $request
+   * @Route("/{slug}/delete", name="recette_delete")
+   * @Security("is_granted('ROLE_USER') and user == recette.getAuthor()", message="vous ne pouvez pas supprimer cette annonce")
    * @param Recette $recette
+   * @param ObjectManager $entityManager
+   * @param Request $request
    * @return Response
    */
-    public function delete(Request $request, Recette $recette): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$recette->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($recette);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('recette_index');
+  public function delete(Recette $recette, Request $request): Response
+  {
+    if ($this->isCsrfTokenValid('delete'.$recette->getId(), $request->request->get('_token'))) {
+      $entityManager = $this->getDoctrine ()->getManager ();
+      $entityManager->remove ($recette);
+      $entityManager->flush ();
     }
+    $this->addFlash (
+      'sucess',
+      "La recette <strong>{$recette->getTitle ()}</strong> a bien été supprimée "
+    );
+
+    return $this->redirectToRoute('recette_index');
+  }
 }

@@ -6,12 +6,15 @@
     <div class="container">
     <h1>{{ recette.title }} (mode édition)</h1>
 
-    {{ include('recette/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('recette_index') }}" class="btn btn-light">back to list</a>
+    {{ include('recette/_form.html.twig', {'button_label': 'Enregistrer'}) }}
+
+    <a href="{{ path('recette_index') }}" class="btn btn-secondary">Retour aux recettes</a>
 
     {{ include('recette/_delete_form.html.twig') }}
+
     </div>
+
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('js/ingredientGestion.js') }}"></script>
