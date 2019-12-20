@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="{{ path('home') }}">WikiCook</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
           aria-controls="navbarColor01" aria-expanded="true" aria-label="Toggle navigation">
@@ -27,15 +27,20 @@
 
     <ul class="navbar-nav ml-auto">
       {% if app.user %}
-        <li class="nav-item">
-          <a href="{{ path('account_logout') }}" class="nav-link">Déconnexion<i class="fa fa-sign-out" aria-hidden="true"></i></a>
+        <li class="nav-item dropdown">
+          <a href="" class="nav-link dropdown-toggle" id="accountDropdown">
+            <img src="{{ app.user.picture }}" class="rounded-circle avatar avatarMini"
+                 alt="avatar de {{ app.user.surnom }}"> {{ app.user.surnom }}
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdown"></div>
         </li>
       {% else %}
         <li class="nav-item">
           <a href="{{ path('account_register') }}" class="nav-link">S'inscrire</a>
         </li>
         <li class="nav-item">
-          <a href="{{ path('account_login') }}" class="nav-link">Connexion <i class="fa fa-sign-in" aria-hidden="true"> </i></a>
+          <a href="{{ path('account_login') }}" class="nav-link">Connexion <i class="fa fa-sign-in"
+                                                                              aria-hidden="true"> </i></a>
         </li>
       {% endif %}
     </ul>

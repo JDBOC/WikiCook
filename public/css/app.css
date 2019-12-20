@@ -19,3 +19,7 @@ body {
     background-color: darksalmon;
     align-items: self-end;
 }
+
+.avatarMini{
+    max-width: 28px;
+}
