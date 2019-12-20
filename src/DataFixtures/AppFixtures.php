@@ -35,13 +35,11 @@
       $adminUser->setSurnom ( 'Jedi' )
         ->setEmail ( 'jdboc@live.fr' )
         ->setPicture ( 'https://media.licdn.com/dms/image/C5103AQHftIGR4eua3Q/profile-displayphoto-shrink_200_200/0?e=1582156800&v=beta&t=Ya6vhdil2WwO35fpOzpGjftxp_mmAcnu0sONn4BfuKw' )
-        ->setHash ($this->encoder->encodePassword ($adminUser, 'password'))
+        ->setHash ( $this->encoder->encodePassword ( $adminUser , 'password' ) )
         ->setDescription ( '<p>' . join ( '</p><p>' , $faker->paragraphs ( 3 ) ) . '</p>' )
-        ->addUserRole ($adminRole);
-      $manager->persist ($adminUser);
+        ->addUserRole ( $adminRole );
+      $manager->persist ( $adminUser );
       //gestion Administrateur
-
-
 
 
       //gestion utilisateurs
@@ -49,7 +47,7 @@
       $genres = ['male' , 'female'];
       $cat = array("Entrée" , "Plat principal" , "Dessert" , "Encas" , "Ptit déj");
 
-$categories = [];
+      $categories = [];
       foreach ($cat as $value) {
         $categorie = new Categorie();
         $categorie->setTitle ( $value );
