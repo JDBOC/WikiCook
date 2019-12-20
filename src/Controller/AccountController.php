@@ -9,6 +9,7 @@ use App\Form\PasswordUpdateType;
 use App\Form\RegistrationType;
 
 
+use App\Repository\RecetteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -135,5 +136,22 @@ class AccountController extends AbstractController
     return $this->render ('account/password.html.twig', [
       'form' => $form->createView ()
     ]);
+    }
+
+  /**
+   * profil utilisateur
+   *
+   * @Route("/account", name="account_index")
+   *
+   * @return Response
+   */
+    public function myAccount(RecetteRepository $repository) {
+
+      $user = $this->getUser ();
+      $recettes = $repository->findByAuthor ($user);
+      return $this->render ('user/index.html.twig', [
+        'user' => $user,
+        'recettes' => $recettes
+      ]);
     }
 }
