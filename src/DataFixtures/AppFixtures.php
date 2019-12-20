@@ -74,7 +74,7 @@ $categories = [];
 
         $recette->setTitle ( $title )
           ->setCover ( 'https://loremflickr.com/520/340/recipe' )
-          ->setAuteur ( $faker->name )
+
           ->setCategorie ($randomCat)
           ->setNombre ( 4 )
           ->setSlug ( $slug )

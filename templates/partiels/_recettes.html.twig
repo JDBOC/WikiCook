@@ -1,0 +1,20 @@
+<div class="row justify-content-center">
+  {% if user.recettes is not empty %}
+  <h2 class="text-center mt-3">Les recettes de {{ user.surnom }}</h2>
+  {% for recette in recettes %}
+    <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
+      <div class="card border-dark mb-4 shadow mr-md-2 ml-md-2" style="max-width: 20rem;">
+        <div class="card-header">{{ recette.title }}</div>
+        <div class="card-img">
+          <img src="{{ recette.cover }}" alt="" class="card-img">
+        </div>
+      </div>
+    </a>
+  {% endfor %}
+  {% else %}
+  <div class="alert alert-dismissible alert-primary mt-4">
+    <p class="text-center">
+      {{ user.surnom }} n'a pas encore enregistré de recette...
+    </p>
+  </div>
+</div>

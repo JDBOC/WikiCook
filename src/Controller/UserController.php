@@ -21,4 +21,5 @@ class UserController extends AbstractController
             'recettes' => $recettes
         ]);
     }
+
 }

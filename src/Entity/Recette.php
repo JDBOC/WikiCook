@@ -38,11 +38,6 @@ class Recette
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $auteur;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
     private $difficulte;
 
     /**
@@ -129,18 +124,6 @@ class Recette
     public function setCover(?string $cover): self
     {
         $this->cover = $cover;
-
-        return $this;
-    }
-
-    public function getAuteur(): ?string
-    {
-        return $this->auteur;
-    }
-
-    public function setAuteur(?string $auteur): self
-    {
-        $this->auteur = $auteur;
 
         return $this;
     }

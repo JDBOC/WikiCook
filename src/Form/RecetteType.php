@@ -17,7 +17,7 @@
       $builder
         ->add ( 'title' )
         ->add ( 'cover' )
-        ->add ( 'auteur')
+
         ->add ( 'difficulte' )
         ->add ('nombre')
         ->add ( 'categorie' , EntityType::class , [

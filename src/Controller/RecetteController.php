@@ -127,6 +127,7 @@ class RecetteController extends AbstractController
         ]);
     }
 
+
   /**
    * @Route("/{slug}", name="recette_delete", methods={"DELETE"})
    * @Security("is_granted('ROLE_USER') and user == ad.getAuthor()", message="vous ne pouvez pas supprimer cette annonce")

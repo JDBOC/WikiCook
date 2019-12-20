@@ -1,5 +1,6 @@
 body {
     background-image: url("../Images/red_berry_border.jpg");
+    background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: auto;
 
