@@ -6,6 +6,7 @@
   use App\Entity\Etape;
   use App\Entity\Ingredient;
   use App\Entity\Recette;
+  use App\Entity\Role;
   use App\Entity\User;
   use Cocur\Slugify\Slugify;
   use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -26,6 +27,21 @@
     {
       $faker = Faker\Factory::create ( 'FR - fr' );
       $slugify = new Slugify();
+      $adminRole = new Role();
+      $adminRole->setTitle ( 'ROLE_ADMIN' );
+      $manager->persist ( $adminRole );
+
+      $adminUser = new User();
+      $adminUser->setSurnom ( 'Jedi' )
+        ->setEmail ( 'jdboc@live.fr' )
+        ->setPicture ( 'https://media.licdn.com/dms/image/C5103AQHftIGR4eua3Q/profile-displayphoto-shrink_200_200/0?e=1582156800&v=beta&t=Ya6vhdil2WwO35fpOzpGjftxp_mmAcnu0sONn4BfuKw' )
+        ->setHash ($this->encoder->encodePassword ($adminUser, 'password'))
+        ->setDescription ( '<p>' . join ( '</p><p>' , $faker->paragraphs ( 3 ) ) . '</p>' )
+        ->addUserRole ($adminRole);
+      $manager->persist ($adminUser);
+      //gestion Administrateur
+
+
 
 
       //gestion utilisateurs
@@ -48,16 +64,16 @@ $categories = [];
         $genre = $faker->randomElement ( $genres );
 
         $picture = 'https://randomuser.me/portraits/';
-        $pictureId = $faker->numberBetween (1, 99) . '.jpg';
+        $pictureId = $faker->numberBetween ( 1 , 99 ) . '.jpg';
         $picture = $picture . ($genre == 'male' ? 'men/' : 'women/') . $pictureId;
 
-        $hash = $this->encoder->encodePassword ($user, 'password');
+        $hash = $this->encoder->encodePassword ( $user , 'password' );
 
-        $user ->setSurnom ( $faker->firstName ( $genre ) )
-              ->setEmail ( $faker->email )
-              ->setHash ( $hash )
-              ->setDescription ('<p>' . join ( '</p><p>' , $faker->paragraphs ( 3 ) ) . '</p>')
-              ->setPicture ($picture);
+        $user->setSurnom ( $faker->firstName ( $genre ) )
+          ->setEmail ( $faker->email )
+          ->setHash ( $hash )
+          ->setDescription ( '<p>' . join ( '</p><p>' , $faker->paragraphs ( 3 ) ) . '</p>' )
+          ->setPicture ( $picture );
 
         $manager->persist ( $user );
         $users[] = $user;
@@ -66,7 +82,7 @@ $categories = [];
 
       for ($i = 0; $i <= 30; $i++) {
         $recette = new Recette();
-        $randomCat = $faker->randomElement ($categories);
+        $randomCat = $faker->randomElement ( $categories );
         $title = $faker->word;
         $slug = $slugify->slugify ( $title );
 
@@ -74,12 +90,11 @@ $categories = [];
 
         $recette->setTitle ( $title )
           ->setCover ( 'https://loremflickr.com/520/340/recipe' )
-
-          ->setCategorie ($randomCat)
+          ->setCategorie ( $randomCat )
           ->setNombre ( 4 )
           ->setSlug ( $slug )
           ->setDifficulte ( mt_rand ( 1 , 5 ) )
-          ->setAuthor ( $faker->randomElement ($users) );
+          ->setAuthor ( $faker->randomElement ( $users ) );
         $manager->persist ( $recette );
 
 
