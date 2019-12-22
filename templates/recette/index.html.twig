@@ -28,7 +28,7 @@
 
                     <a href="{{ path('recette_edit', {'slug': recette.slug}) }}" class="btn btn-outline-secondary">Modifier</a>
                   <a href="{{ path('recette_delete', {'slug': recette.slug}) }}" class="btn btn-outline-danger" onclick="return confirm(`Etes vous sûr de vouloir supprimer cette recette`)"><i class="fa fa-trash" aria-hidden="true"></i></a>
-
+                  {{ include('recette/_delete_form.html.twig') }}
 
                 {% endif %}
 
