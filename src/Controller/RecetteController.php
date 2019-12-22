@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Etape;
 use App\Entity\Recette;
 use App\Form\RecetteType;
 use App\Entity\Ingredient;
@@ -136,22 +137,28 @@ class RecetteController extends AbstractController
    * @Route("/{slug}/delete", name="recette_delete")
    * @Security("is_granted('ROLE_USER') and user == recette.getAuthor()", message="vous ne pouvez pas supprimer cette annonce")
    * @param Recette $recette
-   * @param ObjectManager $entityManager
-   * @param Request $request
+   * @param Etape $etape
+   * @param Ingredient $ingredient
    * @return Response
    */
-  public function delete(Recette $recette, Request $request): Response
+  public function delete(Recette $recette,
+                         Etape $etape,
+                         Ingredient $ingredient
+                         ): Response
   {
-    if ($this->isCsrfTokenValid('delete'.$recette->getId(), $request->request->get('_token'))) {
-      $entityManager = $this->getDoctrine ()->getManager ();
-      $entityManager->remove ($recette);
-      $entityManager->flush ();
+  if (($etape->getRecette () && ($ingredient->getRecette () === $recette->getId ()) )) {
+    if ($this->isCsrfTokenValid ( 'delete' . $ingredient->getId () , $request->request->get ( '_token' ) )) {
+      $manager = $this->getDoctrine ()->getManager ();
+      $manager->remove ( $etape );
+      $manager->remove ( $ingredient );
+      $manager->remove ( $recette );
+      $manager->flush ();
     }
     $this->addFlash (
-      'sucess',
+      'sucess' ,
       "La recette <strong>{$recette->getTitle ()}</strong> a bien été supprimée "
     );
-
+  }
     return $this->redirectToRoute('recette_index');
   }
 }
