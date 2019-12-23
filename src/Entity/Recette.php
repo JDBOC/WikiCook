@@ -46,7 +46,8 @@ class Recette
     private $categorie;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Etape", mappedBy="recette")
+     * @ORM\OneToMany(targetEntity="App\Entity\Etape", mappedBy="recette", cascade="all", orphanRemoval=true)
+     *
      */
     private $etape;
 

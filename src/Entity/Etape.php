@@ -23,6 +23,7 @@ class Etape
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Recette", inversedBy="etape")
+     *
      */
     private $recette;
 

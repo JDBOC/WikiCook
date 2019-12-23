@@ -11,6 +11,7 @@ use App\Repository\IngredientRepository;
 use App\Repository\RecetteRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 
+use phpDocumentor\Reflection\Element;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -134,15 +135,16 @@ class RecetteController extends AbstractController
     }
 
   /**
-   * @Route("/{slug}/delete", name="recette_delete")
+   * @Route("/{slug}", name="recette_delete")
    * @Security("is_granted('ROLE_USER') and user == recette.getAuthor()", message="vous ne pouvez pas supprimer cette annonce")
    * @param Recette $recette
    * @param Request $request
    * @return Response
    */
-  public function delete(Recette $recette, Request $request ): Response
+  public function delete(Recette $recette, Request $request): Response
   {
-    if ($this->isCsrfTokenValid('delete'.$recette->getId(), $request->request->get('_token'))) {
+
+    if ($this->isCsrfTokenValid('delete'.$recette->getId (), $request->request->get('_token'))) {
       $entityManager = $this->getDoctrine()->getManager();
       $entityManager->remove($recette);
       $entityManager->flush();
