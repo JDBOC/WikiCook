@@ -148,7 +148,7 @@ class RecetteController extends AbstractController
       $entityManager->flush();
 
     $this->addFlash (
-      'sucess' ,
+      'success' ,
       "La recette <strong>{$recette->getTitle ()}</strong> a bien été supprimée "
     );
   }
