@@ -9,10 +9,10 @@
         <div class="col-lg-3 text-center">
           <img src="{{ user.picture }}" alt="Avatar de {{ user.surnom }}" class="rounded-circle mb-3">
           <br>
-          {% if user.recettes | length <= 1 %}
+          {% if user.recettes | length < 2 %}
           <span class="badge badge-dark">{{ user.recettes | length }} contribution</span>
           {% else %}
-          <span class="badge badge-dark">{{ user.recettes | length }} contribution</span>
+          <span class="badge badge-dark">{{ user.recettes | length }} contributions</span>
           {% endif %}
         </div>
         <div class="col-lg-9">
