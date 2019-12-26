@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang=fr>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Connexion à l'administration</title>
+  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+  <style>
+    body{
+      display: flex;
+      justify-content: center;
+      height: 100vh;
+    }
+    .cnxAdmin{
+      margin-top: 15%;
+    }
+
+
+  </style>
+
+</head>
+<body>
+<div class="container">
+  <div class="row cnxAdmin">
+    <div class="col-md-3">&nbsp;</div>
+    <div class="col-md-6 align-items-center">
+      <div class="bg-light py-3 px-3">
+        <h2 class="text-center">
+          <i class="fas fa-lock"></i>
+          Connexion au panneau d'administration
+        </h2>
+        {% if hasError %}
+          <div class="alert alert-danger">
+            Erreur! Identifiant ou mot de passe invalide...
+          </div>
+        {% endif %}
+        <form method="post">
+          <div class="form-group">
+            <label for="_username">Email</label>
+            <input type="text" name="_username" id="email" class="form-control"
+                   placeholder="Adresse email..." value="{{ username }}" required>
+          </div>
+          <div class="form-group">
+            <label for="_password">Mot de passe</label>
+            <input type="text" name="_password" id="password" class="form-control"
+                   placeholder="Entrez votre mot de passe" required>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-success">
+              <i class="fas fa-lock-open"></i>
+              Connexion !
+            </button>
+            <a href="{{ path('home') }}" class="btn btn-link">
+              <i class="fas fa-arrow-circle-left"></i>
+              Retour au site
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/89e753fb7b.js" crossorigin="anonymous"></script>
+
+<script src="{{ asset('js/ingredientGestion.js') }}"></script>
+</html>
+
+
+

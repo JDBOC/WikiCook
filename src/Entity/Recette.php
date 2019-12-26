@@ -72,6 +72,7 @@ class Recette
         $this->etape = new ArrayCollection();
     }
 
+
   /**
    * permet slug
    *

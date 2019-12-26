@@ -1,0 +1,47 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration des annonces{% endblock %}
+
+{% block body %}
+  <div class="container-fluidt">
+    <div class="offset-lg-1 col-lg-10 bg-light">
+      <h2 class="my-5 text-center pt-3">Administration des annonces</h2>
+
+      <table class="table table-hover text-center">
+        <thead>
+        <tr>
+          <th>Id</th>
+          <th>Titre</th>
+          <th>Image</th>
+          <th>difficulté</th>
+          <th>catégorie</th>
+          <th>Nbre de personnes</th>
+          <th>Auteur</th>
+          <th>Note Moyenne</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for recette in recettes %}
+          <tr>
+            <td>{{ recette.id }}</td>
+            <td>{{ recette.title }}</td>
+            <td>{{ recette.cover }}</td>
+            <td><span class="badge badge-success rounded">{{ recette.difficulte }}</span></td>
+            <td>{{ recette.categorie }}</td>
+            <td><span class="badge badge-success rounded">{{ recette.nombre }}</span></td>
+            <td><img src="{{ recette.author.picture }}" class="rounded-circle avatar avatarMini" alt="avatar de {{ recette.author }}">
+              {{ recette.author }}
+            </td>
+            <td>fonctionnalité à venir</td>
+            <td>
+              <a href="#" class="btn btn-outline-dark"><i class="fa fa-edit"></i></a>
+              <a href="#" class="btn btn-outline-danger"><i class="fa fa-trash"></i></a>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
