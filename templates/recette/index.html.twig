@@ -14,24 +14,31 @@
             </a>
             <div class="card-body">
               <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
-                <h5 class="card-title">{{ recette.title }}</h5>
+                <h5 class="card-title">{{ recette.title }}
+
+              </h5>
               </a>
+              <div class="text-center">
+                  {% if recette.comments|length > 0 %}
+                    {% include 'partiels/rating.html.twig' with {'note': recette.moyenneDesNotes} %}
+                  {% endif %}
+            </div>
+
               <ul class="list-group list-group-flush">
                 {% if recette.categorie is not null %}
-                  <li class="list-group-item"><strong> {{ recette.categorie.title }}</strong></li>
+                  <li class="list-group-item">
+                    <strong> {{ recette.categorie.title }}</strong>
+                  </li>
                 {% endif %}
                 <li class="list-group-item">Difficulté : {{ recette.difficulte }}</li>
-                <li class="list-group-item">Note : </li>
+
                 <li class="list-group-item">Auteur : {{ recette.author.surnom }}</li>
               </ul>
               <div class="row mt-2 p-2 justify-content-lg-around">
                 {% if app.user == recette.author %}
-
                   <a href="{{ path('recette_edit', {'slug': recette.slug}) }}" class="btn btn-outline-secondary">Modifier</a>
                   {{ include('recette/_delete_form.html.twig') }}
-
                 {% endif %}
-
                 <a href="{{ path('recette_show', {'slug': recette.slug}) }}" class="btn btn-outline-dark"><i
                           class="fa fa-eye" aria-hidden="true"></i> Consulter</a>
               </div>

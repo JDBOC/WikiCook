@@ -78,6 +78,16 @@ class Recette
         $this->comments = new ArrayCollection();
     }
 
+    public function moyenneDesNotes(){
+      $somme = array_reduce ($this->comments->toArray(), function ($total, $comment){
+        return $total + $comment->getNote();
+      }, 0);
+
+      if(count($this->comments)>0) return $somme / count($this->comments);
+
+      return 0;
+    }
+
 
   /**
    * permet slug
