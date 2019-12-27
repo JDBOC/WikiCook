@@ -6,6 +6,7 @@ use App\Entity\Etape;
 use App\Entity\Recette;
 use App\Form\RecetteType;
 use App\Entity\Ingredient;
+use App\Repository\CommentRepository;
 use App\Repository\EtapeRepository;
 use App\Repository\IngredientRepository;
 use App\Repository\RecetteRepository;
@@ -83,13 +84,14 @@ class RecetteController extends AbstractController
    * @param EtapeRepository $etapeRepository
    * @return Response
    */
-    public function show(Recette $recette, IngredientRepository $ingredientRepository, EtapeRepository $etapeRepository): Response
+    public function show(Recette $recette, IngredientRepository $ingredientRepository, EtapeRepository $etapeRepository, CommentRepository $commentRepository): Response
     {
 
         return $this->render('recette/show.html.twig', [
             'recette' => $recette,
             'ingredients' => $ingredientRepository->findByRecette ($recette),
-            'etapes' => $etapeRepository->findByRecette ($recette)
+            'etapes' => $etapeRepository->findByRecette ($recette),
+            'comments' => $commentRepository->findByRecette ($recette)
         ]);
     }
 

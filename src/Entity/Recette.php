@@ -66,10 +66,16 @@ class Recette
      */
     private $author;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="recette", orphanRemoval=true)
+     */
+    private $comments;
+
     public function __construct()
     {
         $this->ingredient = new ArrayCollection();
         $this->etape = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
 
@@ -236,6 +242,37 @@ class Recette
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setRecette($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->contains($comment)) {
+            $this->comments->removeElement($comment);
+            // set the owning side to null (unless already changed)
+            if ($comment->getRecette() === $this) {
+                $comment->setRecette(null);
+            }
+        }
 
         return $this;
     }

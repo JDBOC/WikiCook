@@ -38,9 +38,9 @@
               <div class="col-lg-4">
                 {% if app.user == recette.author %}
                   <div class="row justify-content-lg-around">
-                  <a href="{{ path('recette_edit', {'slug': recette.slug}) }}" class="btn btn-outline-secondary">Modifier</a>
-                  {{ include('recette/_delete_form.html.twig') }}
-              </div>
+                    <a href="{{ path('recette_edit', {'slug': recette.slug}) }}" class="btn btn-outline-secondary">Modifier</a>
+                    {{ include('recette/_delete_form.html.twig') }}
+                  </div>
                 {% endif %}
               </div>
             </div>
@@ -84,12 +84,26 @@
         </div>
         <br>
         <div class="row bg-light rounded p-lg-5">
+          <h3 class="text-center">Etapes de la recette</h3>
           <ol>
             {% for etape in etapes %}
               <li class="m-lg-3">{{ etape.description }}</li>
             {% endfor %}
           </ol>
         </div>
+        <div class="row mt-5">
+          {% for comment in comments %}
+          <div class="card border-dark mb-3" style="max-width: 16rem;">
+            <div class="card-header">Note : {{ comment.note }}</div>
+            <div class="card-body">
+              <h4 class="card-title">Auteur : {{ comment.author }}</h4>
+              <p class="card-text">{{ comment.contenu }}</p>
+            </div>
+
+          {% endfor %}
+        </div>
+
+
       </div>
       <div class="col-lg-4">
       </div>
