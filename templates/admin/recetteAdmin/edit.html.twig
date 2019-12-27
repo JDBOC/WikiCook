@@ -1,0 +1,77 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+  Edition de la recette {{ recette.title }}
+{% endblock %}
+{% form_theme form 'partiels/_collection.html.twig' %}
+{% block body %}
+  <h2 class="text-center mt-4">Modification de la recette {{ recette.title }}</h2>
+  <div class="container">
+
+    {{ form_start(form) }}
+    <div class="row">
+      <div class="col">
+        <div class="card bg-light">
+          <div class="card-header">
+            <h3 class="card-title">Corriger cette recette ?</h3>
+          </div>
+          <div class="card-body">
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-check"></i>
+              Enregistrer les modifications
+            </button>
+            <button class="btn btn-dark">
+              <a href="{{ path('admin_recette_delete', {'id': recette.id}) }}">
+                <i class="fas fa-trash"></i>
+                Suppression
+              </a>
+            </button>
+          </div>
+        </div>
+      </div>
+      {{ form_end(form) }}
+      <div class="col">
+        <div class="card bg-light">
+          <div class="card-header">
+            <h3>Commentaires de la recette {{ recette.title }}</h3>
+          </div>
+          <div class="card-body">
+            <table>
+              <thead>
+              <tr>
+                <th>Id</th>
+                <th>Auteur</th>
+                <th>Crée le</th>
+                <th>Commentaire</th>
+                <th>Actions</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>A venir</td>
+                <td>A venir</td>
+                <td>A venir</td>
+                <td>A venir</td>
+                <td>
+                  <a href="#" class="btn btn-primary">
+                    <i class="fas fa-pen"></i>
+                  </a>
+                  <a href="#" class="btn btn-danger">
+                    <i class="fas fa-trash"></i>
+                  </a>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <a href="{{ path('recette_index') }}" class="btn btn-secondary">Retour aux recettes</a>
+  </div>
+{% endblock %}
+{% block javascripts %}
+  <script src="{{ asset('js/ingredientGestion.js') }}"></script>
+  <script src="{{ asset('js/etapeGestion.js') }}"></script>
+{% endblock %}
