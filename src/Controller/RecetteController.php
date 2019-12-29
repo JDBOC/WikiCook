@@ -1,40 +1,37 @@
 <?php
 
-namespace App\Controller;
+  namespace App\Controller;
 
-use App\Entity\Etape;
-use App\Entity\Recette;
-use App\Form\RecetteType;
-use App\Entity\Ingredient;
-use App\Repository\CommentRepository;
-use App\Repository\EtapeRepository;
-use App\Repository\IngredientRepository;
-use App\Repository\RecetteRepository;
-use Doctrine\Common\Persistence\ObjectManager;
+  use App\Entity\Comment;
+  use App\Entity\Recette;
+  use App\Form\CommentType;
+  use App\Form\RecetteType;
+  use App\Repository\CommentRepository;
+  use App\Repository\EtapeRepository;
+  use App\Repository\IngredientRepository;
+  use App\Repository\RecetteRepository;
+  use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+  use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+  use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+  use Symfony\Component\HttpFoundation\Request;
+  use Symfony\Component\HttpFoundation\Response;
+  use Symfony\Component\Routing\Annotation\Route;
 
-use phpDocumentor\Reflection\Element;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-
-/**
- * @Route("/recette")
- */
-class RecetteController extends AbstractController
-{
   /**
-   * @Route("/", name="recette_index", methods={"GET"})
-   * @param RecetteRepository $recetteRepository
-   * @return Response
+   * @Route("/recette")
    */
+  class RecetteController extends AbstractController
+  {
+    /**
+     * @Route("/", name="recette_index", methods={"GET"})
+     * @param RecetteRepository $recetteRepository
+     * @return Response
+     */
     public function index(RecetteRepository $recetteRepository): Response
     {
-        return $this->render('recette/index.html.twig', [
-            'recettes' => $recetteRepository->findAll(),
-        ]);
+      return $this->render ( 'recette/index.html.twig' , [
+        'recettes' => $recetteRepository->findAll () ,
+      ] );
     }
 
     /**
@@ -43,122 +40,139 @@ class RecetteController extends AbstractController
      */
     public function new(Request $request): Response
     {
-        $recette = new Recette();
-        $user = $this->getUser ();
-        $form = $this->createForm(RecetteType::class, $recette);
-        $form->handleRequest($request);
+      $recette = new Recette();
+      $user = $this->getUser ();
+      $form = $this->createForm ( RecetteType::class , $recette );
+      $form->handleRequest ( $request );
 
-        if ($form->isSubmitted() && $form->isValid()) {
-          $recette->initializeSlug ();
-          $recette->setAuthor ($user);
-            $entityManager = $this->getDoctrine()->getManager();
+      if ($form->isSubmitted () && $form->isValid ()) {
+        $recette->initializeSlug ();
+        $recette->setAuthor ( $user );
+        $entityManager = $this->getDoctrine ()->getManager ();
 
-            foreach ($recette->getIngredient () as $ingredients) {
-              $ingredients -> setRecette ($recette);
-              $entityManager->persist ($ingredients);
-            }
-
-            foreach ($recette->getEtape () as $etape) {
-              $etape -> setRecette ($recette);
-              $entityManager -> persist ($etape);
-            }
-
-
-            $entityManager->persist($recette);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('recette_index');
+        foreach ($recette->getIngredient () as $ingredients) {
+          $ingredients->setRecette ( $recette );
+          $entityManager->persist ( $ingredients );
         }
 
-        return $this->render('recette/new.html.twig', [
-            'recette' => $recette,
-            'form' => $form->createView (),
-        ]);
+        foreach ($recette->getEtape () as $etape) {
+          $etape->setRecette ( $recette );
+          $entityManager->persist ( $etape );
+        }
+        $entityManager->persist ( $recette );
+        $entityManager->flush ();
+
+        return $this->redirectToRoute ( 'recette_index' );
+      }
+
+      return $this->render ( 'recette/new.html.twig' , [
+        'recette' => $recette ,
+        'form' => $form->createView () ,
+      ] );
     }
 
 
-  /**
-   * @Route("/{slug}", name="recette_show", methods={"GET"})
-   * @param Recette $recette
-   * @param IngredientRepository $ingredientRepository
-   * @param EtapeRepository $etapeRepository
-   * @return Response
-   */
-    public function show(Recette $recette, IngredientRepository $ingredientRepository, EtapeRepository $etapeRepository, CommentRepository $commentRepository): Response
+    /**
+     * @Route("/{slug}", name="recette_show")
+     * @param Recette $recette
+     * @param IngredientRepository $ingredientRepository
+     * @param EtapeRepository $etapeRepository
+     * @param CommentRepository $commentRepository
+     * @param Request $request
+     * @return Response
+     */
+    public function show(Recette $recette ,
+                         IngredientRepository $ingredientRepository ,
+                         EtapeRepository $etapeRepository ,
+                         CommentRepository $commentRepository ,
+                         Request $request): Response
     {
+      $comment = new Comment();
+      $user = $this->getUser ();
+      $form = $this->createForm ( CommentType::class , $comment );
+      $form->handleRequest ( $request );
 
-        return $this->render('recette/show.html.twig', [
-            'recette' => $recette,
-            'ingredients' => $ingredientRepository->findByRecette ($recette),
-            'etapes' => $etapeRepository->findByRecette ($recette),
-            'comments' => $commentRepository->findByRecette ($recette)
-        ]);
+      if ($form->isSubmitted () && $form->isValid ()) {
+        $comment->setAuthor ( $user );
+        $comment->setRecette ( $recette );
+        $entityManager = $this->getDoctrine ()->getManager ();
+        $entityManager->persist ( $comment );
+        $entityManager->flush ();
+
+        $this->addFlash ( 'success' , "Votre commentaire a été enregistré" );
+      }
+      return $this->render ( 'recette/show.html.twig' , [
+        'recette' => $recette ,
+        'form' => $form->createView (),
+        'ingredients' => $ingredientRepository->findByRecette ( $recette ) ,
+        'etapes' => $etapeRepository->findByRecette ( $recette ) ,
+        'comments' => $commentRepository->findByRecette ( $recette )
+      ] );
     }
 
 
 
-
-  /**
-   * @Route("/{slug}/edit", name="recette_edit", methods={"GET","POST"})
-   * @Security("is_granted('ROLE_USER') and user == recette.getAuthor()", message="vous ne pouvez pas modifier les annonces dont vous n'êtes pas l'auteur")
-   * @param Request $request
-   * @param Recette $recette
-   * @return Response
-   */
-    public function edit(Request $request, Recette $recette): Response
+    /**
+     * @Route("/{slug}/edit", name="recette_edit", methods={"GET","POST"})
+     * @Security("is_granted('ROLE_USER') and user == recette.getAuthor()", message="vous ne pouvez pas modifier les annonces dont vous n'êtes pas l'auteur")
+     * @param Request $request
+     * @param Recette $recette
+     * @return Response
+     */
+    public function edit(Request $request , Recette $recette): Response
     {
-        $form = $this->createForm(RecetteType::class, $recette);
-        $form->handleRequest($request);
+      $form = $this->createForm ( RecetteType::class , $recette );
+      $form->handleRequest ( $request );
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+      if ($form->isSubmitted () && $form->isValid ()) {
+        $entityManager = $this->getDoctrine ()->getManager ();
 
-          foreach ($recette->getIngredient () as $ingredients) {
-            $ingredients -> setRecette ($recette);
-            $entityManager->persist ($ingredients);
-          }
-
-          foreach ($recette->getEtape () as $etape) {
-            $etape -> setRecette ($recette);
-            $entityManager -> persist ($etape);
-          }
-
-          $entityManager->flush ();
-
-            return $this->redirectToRoute('recette_show', [
-              'slug' => $recette->getSlug ()
-            ]);
+        foreach ($recette->getIngredient () as $ingredients) {
+          $ingredients->setRecette ( $recette );
+          $entityManager->persist ( $ingredients );
         }
 
-        return $this->render('recette/edit.html.twig', [
-            'recette' => $recette,
-            'form' => $form->createView(),
-        ]);
+        foreach ($recette->getEtape () as $etape) {
+          $etape->setRecette ( $recette );
+          $entityManager->persist ( $etape );
+        }
+
+        $entityManager->flush ();
+
+        return $this->redirectToRoute ( 'recette_show' , [
+          'slug' => $recette->getSlug ()
+        ] );
+      }
+
+      return $this->render ( 'recette/edit.html.twig' , [
+        'recette' => $recette ,
+        'form' => $form->createView () ,
+      ] );
     }
 
-  /**
-   * @Route("/{slug}", name="recette_delete")
-   * @Security("is_granted('ROLE_USER') and user == recette.getAuthor()", message="vous ne pouvez pas supprimer cette annonce")
-   * @param Recette $recette
-   * @param Request $request
-   * @return Response
-   */
-  public function delete(Recette $recette, Request $request): Response
-  {
+    /**
+     * @Route("/{slug}", name="recette_delete")
+     * @Security("is_granted('ROLE_USER') and user == recette.getAuthor()", message="vous ne pouvez pas modifier les annonces dont vous n'êtes pas l'auteur")
+     * @param Recette $recette
+     * @param Request $request
+     * @return Response
+     */
+    public function delete(Recette $recette , Request $request): Response
+    {
 
-    if ($this->isCsrfTokenValid('delete'.$recette->getId (), $request->request->get('_token'))) {
-      $entityManager = $this->getDoctrine()->getManager();
-      $entityManager->remove($recette);
-      $entityManager->flush();
+      if ($this->isCsrfTokenValid ( 'delete' . $recette->getId () , $request->request->get ( '_token' ) )) {
+        $entityManager = $this->getDoctrine ()->getManager ();
+        $entityManager->remove ( $recette );
+        $entityManager->flush ();
 
-    $this->addFlash (
-      'success' ,
-      "La recette <strong>{$recette->getTitle ()}</strong> a bien été supprimée "
-    );
+        $this->addFlash (
+          'success' ,
+          "La recette <strong>{$recette->getTitle ()}</strong> a bien été supprimée "
+        );
+      }
+      return $this->redirectToRoute ( 'recette_index' );
+    }
   }
-    return $this->redirectToRoute('recette_index');
-}
-}
 
 
 

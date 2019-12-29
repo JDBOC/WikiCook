@@ -40,8 +40,10 @@
                   <div class="row justify-content-lg-around">
                     <a href="{{ path('recette_edit', {'slug': recette.slug}) }}" class="btn btn-outline-secondary">Modifier</a>
                     {{ include('recette/_delete_form.html.twig') }}
+
                   </div>
                 {% endif %}
+
               </div>
             </div>
 
@@ -89,6 +91,16 @@
             {% endfor %}
           </ol>
         </div>
+        <div class="col-lg-10">
+          <h3 class="text-center">Votre avis compte</h3>
+
+          {{ form_start(form) }}
+
+          {{ form_widget(form) }}
+          <button type="submit" class="btn btn-success">Sauvegarder</button>
+          {{ form_end(form) }}
+
+        </div>
         {% if recette.comments|length > 0 %}
         <div class="alert alert-info mt-lg-3">
           <h3 class="alert-heading text-center">
@@ -105,20 +117,27 @@
           </h3>
         </div>
         {% endif %}
+
         <div class="row mt-lg-3">
+
+
           {% for comment in recette.comments %}
-          <div class="card border-dark mb-3" style="max-width: 16rem;">
+
+          <div class="card border-dark m-3" style="max-width: 16rem;">
             <div class="card-header">Auteur : {{ comment.author }}</div>
             <div class="card-body">
               <h4 class="card-title small">Note :
                 {% include 'partiels/rating.html.twig' with {'note': recette.moyenneDesNotes} %}
               </h4>
-              <p class="card-text">{{ comment.contenu }}</p>
+              <p class="card-text" onscroll="this">{{ comment.contenu }}</p>
             </div>
-            {% endfor %}
           </div>
+            {% endfor %}
+
+
         </div>
         <div class="col-lg-4">
+
         </div>
       </div>
     </div>
@@ -131,9 +150,9 @@
 
     <a href="{{ path('recette_edit', {'slug': recette.slug}) }}" class="btn btn-danger">
       <i class="fa fa-edit"></i>
-      edit
+      Editer
     </a>
 
-    {{ include('recette/_delete_form.html.twig') }}
+
   </div>
 {% endblock %}
