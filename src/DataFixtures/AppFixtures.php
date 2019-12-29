@@ -85,6 +85,7 @@
                   ->setCover ( 'https://loremflickr.com/520/340/recipe' )
                   ->setCategorie ( $randomCat )
                   ->setNombre ( 4 )
+                  ->setDuration (mt_rand (5, 240))
                   ->setSlug ( $slug )
                   ->setDifficulte ( mt_rand ( 1 , 5 ) )
                   ->setAuthor ( $faker->randomElement ( $users ) );

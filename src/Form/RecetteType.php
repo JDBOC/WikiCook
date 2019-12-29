@@ -7,19 +7,20 @@
   use Symfony\Bridge\Doctrine\Form\Type\EntityType;
   use Symfony\Component\Form\AbstractType;
   use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+  use Symfony\Component\Form\Extension\Core\Type\IntegerType;
   use Symfony\Component\Form\FormBuilderInterface;
   use Symfony\Component\OptionsResolver\OptionsResolver;
 
-  class RecetteType extends AbstractType
+  class RecetteType extends CommonType
   {
     public function buildForm(FormBuilderInterface $builder , array $options)
     {
       $builder
         ->add ( 'title' )
         ->add ( 'cover' )
-
+        ->add ('duration', IntegerType::class,$this->getConfig ('durée', "indiquez la durée nécessaire en minutes"))
         ->add ( 'difficulte' )
-        ->add ('nombre')
+        ->add ('nombre', $this->getConfig ('nombre', "c'est pour combien de personnes"))
         ->add ( 'categorie' , EntityType::class , [
           'class' => Categorie::class ,
           'choice_label' => 'title'
