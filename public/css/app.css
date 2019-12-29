@@ -10,7 +10,9 @@ body {
 
 }
 
-
+.fa-star{
+    color: goldenrod;
+}
 
 .infos {
     color: darkred;
