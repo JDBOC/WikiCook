@@ -34,9 +34,9 @@
 
                 <li class="list-group-item">Auteur : {{ recette.author.surnom }}</li>
               </ul>
-              <div class="row mt-2 p-2 justify-content-lg-around">
+              <div class="row mt-2 justify-content-lg-around">
                 {% if app.user == recette.author %}
-                  <a href="{{ path('recette_edit', {'slug': recette.slug}) }}" class="btn btn-outline-secondary">Modifier</a>
+                  <a href="{{ path('recette_edit', {'slug': recette.slug}) }}" class="btn btn-secondary">Modifier</a>
 
                   {{ include('recette/_delete_form.html.twig') }}
                 {% endif %}
