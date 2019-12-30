@@ -4,26 +4,25 @@
 
 {% block body %}
   <div class="container">
-    <div class="row mt-5">
-      <div class="col-md-4">&nbsp;</div>
-      <div class="col-md-4 align-items-center">
-       <div class="bg-light py-3 px-3">
 
+    <div class="row justify-content-lg-center">
+
+      <div class="col-md-6 login align-items-center">
+       <div class="bg-light py-3 px-3">
+         <h2 class="text-dark text-center">Connectez vous !</h2>
          {% if hasError %}
             <div class="alert alert-danger">
               Erreur! Identifiant ou mot de passe invalide...
             </div>
          {% endif %}
-
         <form action="{{ path('account_login') }}" method="post">
           <div class="form-group">
             <label for="_username">Email</label>
-
             <input type="text" name="_username" id="email" class="form-control" placeholder="Adresse email..." required>
           </div>
           <div class="form-group">
             <label for="_password">Mot de passe</label>
-            <input type="text" name="_password" id="password" class="form-control"
+            <input type="password" name="_password" id="password" class="form-control"
                    placeholder="Entrez votre mot de passe" required>
           </div>
           <div class="form-group">

@@ -8,6 +8,8 @@
   use Symfony\Component\Form\AbstractType;
   use Symfony\Component\Form\Extension\Core\Type\CollectionType;
   use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+  use Symfony\Component\Form\Extension\Core\Type\TextType;
+  use Symfony\Component\Form\Extension\Core\Type\UrlType;
   use Symfony\Component\Form\FormBuilderInterface;
   use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,11 +18,11 @@
     public function buildForm(FormBuilderInterface $builder , array $options)
     {
       $builder
-        ->add ( 'title' )
-        ->add ( 'cover' )
+        ->add ( 'title', TextType::class, $this->getConfig ('Titre', "Indiquez le titre de cette recette") )
+        ->add ( 'cover', UrlType::class, $this->getConfig ('Image', "indiquez une adresse URL") )
         ->add ('duration', IntegerType::class,$this->getConfig ('durée', "indiquez la durée nécessaire en minutes"))
         ->add ( 'difficulte' )
-        ->add ('nombre', $this->getConfig ('nombre', "c'est pour combien de personnes"))
+        ->add ('nombre', IntegerType::class, $this->getConfig ('nombre', "c'est pour combien de personnes"))
         ->add ( 'categorie' , EntityType::class , [
           'class' => Categorie::class ,
           'choice_label' => 'title'

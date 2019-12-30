@@ -1,5 +1,11 @@
 
 {{ form_start(form) }}
     {{ form_widget(form) }}
+
+<div class="row justify-content-md-center">
     <button class="btn btn-success">{{ button_label|default('Sauvegarder') }}</button>
 {{ form_end(form) }}
+</div>
+    <a href="{{ path('recette_index') }}" class="btn btn-secondary">Retour aux recettes</a>
+
+

@@ -151,26 +151,27 @@
     }
 
     /**
-     * @Route("/{slug}", name="recette_delete")
+     * @Route("/{id}/delete", name="recette_delete", methods={"DELETE"})
      * @Security("is_granted('ROLE_USER') and user == recette.getAuthor()", message="vous ne pouvez pas modifier les annonces dont vous n'êtes pas l'auteur")
      * @param Recette $recette
-     * @param Request $request
      * @return Response
      */
-    public function delete(Recette $recette , Request $request): Response
+    public function delete(Recette $recette): Response
     {
 
-      if ($this->isCsrfTokenValid ( 'delete' . $recette->getId () , $request->request->get ( '_token' ) )) {
+
         $entityManager = $this->getDoctrine ()->getManager ();
-        $entityManager->remove ( $recette );
+
+        $entityManager->remove ($recette);
         $entityManager->flush ();
 
         $this->addFlash (
           'success' ,
           "La recette <strong>{$recette->getTitle ()}</strong> a bien été supprimée "
         );
-      }
-      return $this->redirectToRoute ( 'recette_index' );
+        return $this->redirectToRoute ( 'recette_index' );
+
+
     }
   }
 

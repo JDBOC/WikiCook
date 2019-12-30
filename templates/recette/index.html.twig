@@ -4,7 +4,7 @@
 
 {% block body %}
   <div class="container">
-    <h1 class="text-center">Recettes</h1>
+    <h1 class="text-center titre text-dark">Liste des recettes</h1>
     <div class="row">
       {% for recette in recettes %}
         <div class="col-lg-3 m-4">
@@ -37,6 +37,7 @@
               <div class="row mt-2 p-2 justify-content-lg-around">
                 {% if app.user == recette.author %}
                   <a href="{{ path('recette_edit', {'slug': recette.slug}) }}" class="btn btn-outline-secondary">Modifier</a>
+
                   {{ include('recette/_delete_form.html.twig') }}
                 {% endif %}
                 <a href="{{ path('recette_show', {'slug': recette.slug}) }}" class="btn btn-outline-dark"><i

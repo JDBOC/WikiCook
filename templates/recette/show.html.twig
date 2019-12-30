@@ -87,8 +87,30 @@
             {% endfor %}
           </ol>
         </div>
+        <div class="row">
+
+          <div class="col-lg-6">
+            {% if recette.comments|length > 0 %}
+              <div class="alert alert-primary mt-lg-3 align-items-center">
+                <h3 class="alert-heading text-center">
+                  <div class="row align-items-center">
+                    <div class="col">
+                      Note moyenne
+                    </div>
+                    <div class="col">
+                      {% include 'partiels/rating.html.twig' with {'note': recette.moyenneDesNotes} %}
+                      <br>
+                      <small>calculée sur {{ recette.comments | length }} avis</small>
+                    </div>
+                  </div>
+                </h3>
+              </div>
+            {% endif %}
+          </div>
+
         {% if app.user %}
-        <div class="col-lg-10">
+
+        <div class="col-lg-6 mt-lg-3 bg-light p-2">
           <h3 class="text-center">Votre avis compte !</h3>
 
           {{ form_start(form) }}
@@ -98,23 +120,8 @@
           {{ form_end(form) }}
         </div>
         {% endif %}
-        {% if recette.comments|length > 0 %}
-        <div class="alert alert-primary mt-lg-3">
-          <h3 class="alert-heading text-center">
-            <div class="row align-items-center">
-              <div class="col">
-                Note moyenne
-              </div>
-              <div class="col">
-                {% include 'partiels/rating.html.twig' with {'note': recette.moyenneDesNotes} %}
-                <br>
-                <small>calculée sur {{ recette.comments | length }} avis</small>
-              </div>
-            </div>
-          </h3>
-        </div>
-        {% endif %}
 
+      </div>
         <div class="row mt-lg-3">
 
 
@@ -139,17 +146,25 @@
       </div>
     </div>
 
-
+<div class="row justify-content-md-around m-4 btn-group-lg">
+  <div class="col">
     <a href="{{ path('recette_index') }}" class="btn btn-info">
       <i class="fas fa-arrow-left"></i>
       Retour aux recettes
     </a>
-
-    <a href="{{ path('recette_edit', {'slug': recette.slug}) }}" class="btn btn-danger">
+</div>
+  <div class="col">
+    <div class="row">
+    <a href="{{ path('recette_edit', {'slug': recette.slug}) }}" class="btn btn-danger mr-2">
       <i class="fa fa-edit"></i>
       Editer
     </a>
+    {{ include('recette/_delete_form.html.twig') }}
+</div>
+</div>
+  <div class="col">
 
-
+</div>
+  </div>
   </div>
 {% endblock %}

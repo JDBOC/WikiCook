@@ -1,14 +1,26 @@
 body {
-    background-image: url("../Images/background.jpg");
+    background-image: url("../Images/superalimentos.jpg");
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
 
 }
+.container{
+    margin-top: 8rem;
+}
+.login{
+margin-top: 15%;
+}
 
-.header{
+.jumbo{
+    margin-top: 10%;
+}
 
+.lead{
 
+    display: block;
+
+    margin : auto;
 }
 
 .fa-star{
