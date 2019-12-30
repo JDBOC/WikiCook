@@ -3,28 +3,33 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <div class="container">
+  <div class="container">
 
-        <div class="jumbotron mt-4 jumbo">
-            <h1 class="display-3">Bienvenue sur WikiCook</h1>
-            <p class="lead">Partagez vos recettes préférées et trouvez de nouvelles idées</p>
-            <hr class="my-4">
-            <p>Ceci est un projet bac à sable, il sera amené à évoluer dans le temps avec l'implémentation de nouvelles fonctionnalités...</p>
-            <p class="lead">
-                <a class="btn btn-primary btn-lg" href="{{path('recette_index')}}" role="button">Voir les recettes</a>
-            </p>
-        </div>
-
-        <h2 class="text-center">Nos Meilleures recettes</h2>
-        <div class="row">
-            <div class="col-lg-4">
-                <div class="card-header text-center">
-
-                </div>
-            </div>
-            <div class="col-lg-4"></div>
-            <div class="col-lg-4"></div>
-        </div>
-
+    <div class="jumbotron mt-4 jumbo">
+      <h1 class="text-dark">Bienvenue sur <strong>WikiCook</strong></h1>
+      <p class="lead">Partagez vos recettes préférées et trouvez de nouvelles idées</p>
+      <hr class="my-4">
+      <p>Ceci est un projet bac à sable, il sera amené à évoluer dans le temps avec l'implémentation de nouvelles
+        fonctionnalités comme</p>
+      <ul>
+        <li>la recherche par mots clés</li>
+        <li>la recherche par type de plat</li>
+        <li>l'upload direct d'image</li>
+        <li>et bien d'autres choses encore...</li>
+      </ul>
+      <p class="lead">
+        <a class="btn btn-outline-dark btn-lg" href="{{ path('recette_index') }}" role="button">Voir les recettes</a>
+      </p>
     </div>
+    <div class="bg-light  p-2">
+      <h1 class="text-center text-dark">Les dernières recettes ajoutées</h1>
+      <div class="row m-lg-auto">
+        {% for data in recettes %}
+            {% include 'partiels/_card.html.twig' with {'recette': data.recette} %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+
 {% endblock %}
