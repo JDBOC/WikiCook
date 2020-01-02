@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Cocur\Slugify\Slugify;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -71,6 +72,19 @@ class Recette
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $duration;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $createdAt;
+
+
+
+
     public function __construct()
     {
         $this->ingredient = new ArrayCollection();
@@ -78,6 +92,27 @@ class Recette
         $this->comments = new ArrayCollection();
     }
 
+    public function moyenneDesNotes(){
+      $somme = array_reduce ($this->comments->toArray(), function ($total, $comment){
+        return $total + $comment->getNote();
+      }, 0);
+
+      if(count($this->comments)>0) return $somme / count($this->comments);
+
+      return 0;
+    }
+
+  /**
+   * permet mise en place de la date de création
+   *
+   * @ORM\PrePersist()
+   * @return void
+   */
+  public function prePersist() {
+    if (empty($this->createdAt)) {
+      $this->createdAt = new DateTime();
+    }
+  }
 
   /**
    * permet slug
@@ -276,4 +311,29 @@ class Recette
 
         return $this;
     }
+
+    public function getDuration(): ?int
+    {
+        return $this->duration;
+    }
+
+    public function setDuration(?int $duration): self
+    {
+        $this->duration = $duration;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
 }

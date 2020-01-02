@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Comment{% endblock %}
+
+{% block body %}
+    <h1>Create new Comment</h1>
+<div class="container bg-light">
+    {{ include('comment/_form.html.twig') }}
+
+    <a href="{{ path('recette_show', {'slug': recette.slug}) }}">back to list</a>
+    </div>
+{% endblock %}

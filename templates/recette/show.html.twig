@@ -44,8 +44,6 @@
                 {% endif %}
               </div>
             </div>
-
-
           </div>
           <div class="col-lg-5 p-5">
             <table class="table">
@@ -67,15 +65,13 @@
         <br>
         <div class="row bginfos p-1 rounded">
           {% if recette.categorie is not null %}
-
             <div class="col-3 text-white text-center"><i class="fa fa-cutlery"></i> <span
                       class="infos"> {{ recette.categorie.title }}</span></div>
-
           {% endif %}
           <div class="col-3 text-white text-center">Difficulté
             <span class="infos">{{ recette.difficulte }}</span></div>
           <div class="col-3 text-white text-center"><i class="fa fa-clock-o" aria-hidden="true"></i> <span
-                    class="infos">  {{ recette.id }}</span>
+                    class="infos">  {{ recette.duration }}</span>
             minutes
           </div>
           <div class="col-3 text-white text-center"><span class="fa fa-group"></span><span
@@ -91,29 +87,77 @@
             {% endfor %}
           </ol>
         </div>
-        <div class="row mt-5">
-          {% for comment in comments %}
-          <div class="card border-dark mb-3" style="max-width: 16rem;">
-            <div class="card-header">Note : {{ comment.note }}</div>
-            <div class="card-body">
-              <h4 class="card-title">Auteur : {{ comment.author }}</h4>
-              <p class="card-text">{{ comment.contenu }}</p>
-            </div>
+        <div class="row">
 
-          {% endfor %}
+          <div class="col-lg-6">
+            {% if recette.comments|length > 0 %}
+              <div class="alert alert-primary mt-lg-3 align-items-center">
+                <h3 class="alert-heading text-center">
+                  <div class="row align-items-center">
+                    <div class="col">
+                      Note moyenne
+                    </div>
+                    <div class="col">
+                      {% include 'partiels/rating.html.twig' with {'note': recette.moyenneDesNotes} %}
+                      <br>
+                      <small>calculée sur {{ recette.comments | length }} avis</small>
+                    </div>
+                  </div>
+                </h3>
+              </div>
+              {% else %}
+              <div class="alert alert-info mt-lg-3 align-items-center text-center">
+                <h3>Cette recette n'a pas encore été notée</h3>
+              </div>
+            {% endif %}
+          </div>
+
+        {% if app.user %}
+
+        <div class="col-lg-6 mt-lg-3 bg-light p-2">
+          <h3 class="text-center">Votre avis compte !</h3>
+
+          {{ form_start(form) }}
+
+          {{ form_widget(form) }}
+          <button type="submit" class="btn btn-success">Sauvegarder</button>
+          {{ form_end(form) }}
         </div>
-
+        {% endif %}
 
       </div>
-      <div class="col-lg-4">
+        <div class="row mt-lg-3">
+
+
+          {% for comment in recette.comments %}
+
+          <div class="card border-dark m-3" style="max-width: 16rem;">
+            <div class="card-header">Auteur : {{ comment.author }}</div>
+            <div class="card-body">
+              <h4 class="card-title small">Note :
+                {% include 'partiels/rating.html.twig' with {'note': recette.moyenneDesNotes} %}
+              </h4>
+              <p class="card-text" onscroll="this">{{ comment.contenu }}</p>
+            </div>
+          </div>
+            {% endfor %}
+
+
+        </div>
+        <div class="col-lg-4">
+
+        </div>
       </div>
     </div>
+
+<div class="row justify-content-md-around m-4 btn-group-lg">
+  <div class="col">
+    <a href="{{ path('recette_index') }}" class="btn btn-info">
+      <i class="fas fa-arrow-left"></i>
+      Retour aux recettes
+    </a>
+</div>
+
   </div>
-
-
-  <a href="{{ path('recette_index') }}">back to list</a>
-
-  <a href="{{ path('recette_edit', {'slug': recette.slug}) }}">edit</a>
-
-  {{ include('recette/_delete_form.html.twig') }}
+  </div>
 {% endblock %}

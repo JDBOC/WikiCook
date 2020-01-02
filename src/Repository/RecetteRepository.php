@@ -20,23 +20,24 @@ class RecetteRepository extends ServiceEntityRepository
     }
 
 
+  /**
+   * @param $limit
+   * @return Recette[] Returns an array of Recette objects
+   */
 
-    // /**
-    //  * @return Recette[] Returns an array of Recette objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findByDate($limit)
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
+
+            ->select ('r as recette, r.createdAt as c')
+            ->groupBy ('r')
+            ->orderBy('c', 'DESC')
+            ->setMaxResults($limit)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Recette
