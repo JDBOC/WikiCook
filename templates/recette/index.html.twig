@@ -10,20 +10,19 @@
         <div class="col-lg-3 m-4">
           <div class="card" style="width: 18rem;">
             <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
-              <img class="card-img-top" src="{{ recette.cover }}" alt="Card image cap">
+              <img class="card-img-top" src="{{ asset('images/recettes/'~recette.getImage) }}" alt="Card image cap">
             </a>
             <div class="card-body">
               <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
                 <h5 class="card-title">{{ recette.title }}
 
-              </h5>
+                </h5>
               </a>
               <div class="text-center">
-                  {% if recette.comments|length > 0 %}
-                    {% include 'partiels/rating.html.twig' with {'note': recette.moyenneDesNotes} %}
-                  {% endif %}
-            </div>
-
+                {% if recette.comments|length > 0 %}
+                  {% include 'partiels/rating.html.twig' with {'note': recette.moyenneDesNotes} %}
+                {% endif %}
+              </div>
               <ul class="list-group list-group-flush">
                 {% if recette.categorie is not null %}
                   <li class="list-group-item">
@@ -37,7 +36,6 @@
               <div class="row mt-2 justify-content-lg-around">
                 {% if app.user == recette.author %}
                   <a href="{{ path('recette_edit', {'slug': recette.slug}) }}" class="btn btn-secondary">Modifier</a>
-
                   {{ include('recette/_delete_form.html.twig') }}
                 {% endif %}
                 <a href="{{ path('recette_show', {'slug': recette.slug}) }}" class="btn btn-outline-dark"><i
@@ -49,5 +47,33 @@
       {% endfor %}
     </div>
     <a href="{{ path('recette_new') }}">Create new</a>
+
+    <div class="d-flex justify-content-center">
+      <ul class="pagination">
+        <li class="page-item disabled">
+          <a class="page-link" href="#">&laquo;</a>
+        </li>
+        <li class="page-item active">
+          <a class="page-link" href="#">1</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">2</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">3</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">4</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">5</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">&raquo;</a>
+        </li>
+      </ul>
+    </div>
+
+
   </div>
 {% endblock %}

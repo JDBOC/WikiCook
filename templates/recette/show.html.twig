@@ -11,14 +11,14 @@
         <div class="row bg-light rounded">
           <div class="col-lg-7">
             <h1 class="text-center p-lg-5">{{ recette.title }}</h1>
-            <img src="{{ recette.cover }}" class="img-thumbnail img-fluid" alt="Image principale">
+            <img src="{{ asset('images/recettes/'~recette.getImage) }}" class="img-thumbnail img-fluid" alt="Image principale">
 
             <div class="row m-4 align-items-center">
 
               <div class="col-lg-4">
 
                 <img src="{{ recette.author.picture }}" alt="Avatar de {{ recette.author.surnom }}"
-                     class="rounded avatarMini img-fluid">
+                     class="rounded-circle avatarMini img-fluid">
               </div>
 
               <div class="col-lg-2 text-center">
