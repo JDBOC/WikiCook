@@ -41,15 +41,18 @@
      * @Assert\Email(message="Adresse email non valide")
      */
     private $email;
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $picture;
+
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      */
     private $hash;
+
     /**
      * @ORM\Column(type="string", length=255)
      */

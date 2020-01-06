@@ -11,6 +11,8 @@ use App\Repository\RecetteRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -59,6 +61,22 @@ class AccountController extends AbstractController
       $form ->handleRequest ($request);
 
       if ($form -> isSubmitted () && $form->isValid ()) {
+        /** @var UploadedFile $brochureFile */
+        $brochureFile = $form['picture']->getData();
+        if ($brochureFile) {
+          $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
+          $newFilename = $originalFilename.'-'.uniqid( '' , true ).'.'.$brochureFile->guessExtension();
+          try {
+            $brochureFile->move(
+              $this->getParameter('user_directory'),
+              $newFilename
+            );
+          } catch (FileException $e) {
+
+          }
+          $user->setPicture($newFilename);
+        }
+
         $entityManager = $this->getDoctrine()->getManager();
         $hash = $encoder->encodePassword ($user, $user->getHash ());
         $user->setHash ($hash);
@@ -85,6 +103,21 @@ class AccountController extends AbstractController
       $form->handleRequest ($request);
 
       if ($form->isSubmitted ()&& $form->isValid ()) {
+        /** @var UploadedFile $brochureFile */
+        $brochureFile = $form['picture']->getData();
+        if ($brochureFile) {
+          $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
+          $newFilename = $originalFilename.'-'.uniqid( '' , true ).'.'.$brochureFile->guessExtension();
+          try {
+            $brochureFile->move(
+              $this->getParameter('user_directory'),
+              $newFilename
+            );
+          } catch (FileException $e) {
+
+          }
+          $user->setPicture($newFilename);
+        }
         $entityManager = $this->getDoctrine ()->getManager ();
         $entityManager->persist ($user);
         $entityManager -> flush ();

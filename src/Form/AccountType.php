@@ -4,8 +4,10 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class AccountType extends AbstractType
 {
@@ -14,7 +16,20 @@ class AccountType extends AbstractType
         $builder
             ->add('surnom')
             ->add('email')
-            ->add('picture')
+            ->add('picture',  FileType::class , [
+              'label' => 'Image' ,
+              'mapped' => false ,
+              'required' => false ,
+              'constraints' => [
+                new File( [
+                  'maxSize' => '4096k' ,
+                  'mimeTypes' => [
+                    'image/jpeg' ,
+                    'image/jpg' ,
+                    'image/png'
+                  ] ,
+                  'mimeTypesMessage' => 'téléchargez une image depuis votre bibliothèque' ,
+                ] )]])
 
         ;
     }

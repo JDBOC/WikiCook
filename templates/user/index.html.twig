@@ -7,7 +7,9 @@
     <div class="bg-light p-4 mt-4">
       <div class="row mt-2 align-items-center">
         <div class="col-lg-3 text-center">
-          <img src="{{ user.picture }}" alt="Avatar de {{ user.surnom }}" class="rounded-circle mb-3">
+
+            <img class="card-img-top rounded-circle" src="{{ asset('images/userImage/'~user.picture) }}" alt="Card image cap">
+
           <br>
           {% if user.recettes | length < 2 %}
           <span class="badge badge-dark">{{ user.recettes | length }} contribution</span>
