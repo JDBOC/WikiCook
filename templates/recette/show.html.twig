@@ -11,7 +11,11 @@
         <div class="row bg-light rounded">
           <div class="col-lg-7">
             <h1 class="text-center p-lg-5">{{ recette.title }}</h1>
-            <img src="{{ asset('images/recettes/'~recette.getImage) }}" class="img-thumbnail img-fluid" alt="Image principale">
+            {% if recette.cover is not null %}
+              <img class="card-img-top" src="{{ recette.cover }}" alt="Card image cap">
+            {% else %}
+              <img class="card-img-top" src="{{ asset('images/recettes/'~recette.getImage) }}" alt="Card image cap">
+            {% endif %}
 
             <div class="row m-4 align-items-center">
 
