@@ -43,11 +43,9 @@
     <div class="card border-dark mb-4 shadow mr-md-2 ml-md-2" style="max-width: 20rem;">
       <div class="card-header">{{ recette.title }}</div>
       <div>
-        {% if recette.cover is not null %}
-          <img class="card-img-top" src="{{ recette.cover }}" alt="Card image cap">
-        {% else %}
+
           <img class="card-img-top" src="{{ asset('images/recettes/'~recette.getImage) }}" alt="Image de {{ recette.title }}">
-        {% endif %}
+
       </div>
     </div>
     </a>
