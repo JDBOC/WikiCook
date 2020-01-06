@@ -10,9 +10,12 @@
   use App\Repository\EtapeRepository;
   use App\Repository\IngredientRepository;
   use App\Repository\RecetteRepository;
+  use App\Service\Pagination;
   use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
   use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
   use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+  use Symfony\Component\HttpFoundation\File\Exception\FileException;
+  use Symfony\Component\HttpFoundation\File\UploadedFile;
   use Symfony\Component\HttpFoundation\Request;
   use Symfony\Component\HttpFoundation\Response;
   use Symfony\Component\Routing\Annotation\Route;
@@ -23,14 +26,28 @@
   class RecetteController extends AbstractController
   {
     /**
-     * @Route("/", name="recette_index", methods={"GET"})
+     * @Route("/{page<\d+>?1}", name="recette_index", methods={"GET"})
      * @param RecetteRepository $recetteRepository
+     * @param $page
+     * @param Pagination $pagination
      * @return Response
      */
-    public function index(RecetteRepository $recetteRepository): Response
+    public function index(RecetteRepository $recetteRepository, $page, Pagination $pagination): Response
     {
+      $pagination->setEntityClass (Recette::class)
+                  ->setPage ($page)
+                  ->setLimit (12);
+
+      $recipes = $pagination->getData ();
+
+
+      $total = count($recetteRepository->findAll ());
+      $pages = ceil($total / 12);
+
       return $this->render ( 'recette/index.html.twig' , [
-        'recettes' => $recetteRepository->findAll () ,
+        'recettes' => $recipes,
+        'pages' => $pages,
+        'page' => $page
       ] );
     }
 
@@ -48,6 +65,23 @@
       if ($form->isSubmitted () && $form->isValid ()) {
         $recette->initializeSlug ();
         $recette->setAuthor ( $user );
+
+        /** @var UploadedFile $brochureFile */
+        $brochureFile = $form['image']->getData();
+        if ($brochureFile) {
+          $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
+          $newFilename = $originalFilename.'-'.uniqid( '' , true ).'.'.$brochureFile->guessExtension();
+          try {
+            $brochureFile->move(
+              $this->getParameter('images_directory'),
+              $newFilename
+            );
+          } catch (FileException $e) {
+
+          }
+          $recette->setImage($newFilename);
+        }
+
         $entityManager = $this->getDoctrine ()->getManager ();
 
         foreach ($recette->getIngredient () as $ingredients) {
@@ -125,6 +159,26 @@
       $form->handleRequest ( $request );
 
       if ($form->isSubmitted () && $form->isValid ()) {
+
+
+        /** @var UploadedFile $brochureFile */
+        $brochureFile = $form['image']->getData();
+        if ($brochureFile) {
+          $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
+          $newFilename = $originalFilename.'-'.uniqid( '' , true ).'.'.$brochureFile->guessExtension();
+          try {
+            $brochureFile->move(
+              $this->getParameter('images_directory'),
+              $newFilename
+            );
+          } catch (FileException $e) {
+
+          }
+          $recette->setImage($newFilename);
+        }
+
+
+
         $entityManager = $this->getDoctrine ()->getManager ();
 
         foreach ($recette->getIngredient () as $ingredients) {

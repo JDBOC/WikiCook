@@ -10,20 +10,23 @@
         <div class="col-lg-3 m-4">
           <div class="card" style="width: 18rem;">
             <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
+              {% if recette.cover is not null %}
               <img class="card-img-top" src="{{ recette.cover }}" alt="Card image cap">
+              {% else %}
+              <img class="card-img-top" src="{{ asset('images/recettes/'~recette.getImage) }}" alt="Card image cap">
+                {% endif %}
             </a>
             <div class="card-body">
               <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
                 <h5 class="card-title">{{ recette.title }}
 
-              </h5>
+                </h5>
               </a>
               <div class="text-center">
-                  {% if recette.comments|length > 0 %}
-                    {% include 'partiels/rating.html.twig' with {'note': recette.moyenneDesNotes} %}
-                  {% endif %}
-            </div>
-
+                {% if recette.comments|length > 0 %}
+                  {% include 'partiels/rating.html.twig' with {'note': recette.moyenneDesNotes} %}
+                {% endif %}
+              </div>
               <ul class="list-group list-group-flush">
                 {% if recette.categorie is not null %}
                   <li class="list-group-item">
@@ -37,7 +40,6 @@
               <div class="row mt-2 justify-content-lg-around">
                 {% if app.user == recette.author %}
                   <a href="{{ path('recette_edit', {'slug': recette.slug}) }}" class="btn btn-secondary">Modifier</a>
-
                   {{ include('recette/_delete_form.html.twig') }}
                 {% endif %}
                 <a href="{{ path('recette_show', {'slug': recette.slug}) }}" class="btn btn-outline-dark"><i
@@ -49,5 +51,23 @@
       {% endfor %}
     </div>
     <a href="{{ path('recette_new') }}">Create new</a>
+
+    <div class="d-flex justify-content-center">
+      <ul class="pagination">
+        <li class="page-item {% if page == 1 %} disabled {% endif %}">
+          <a class="page-link" href="{{ path('recette_index', {'page': page - 1}) }}">&laquo;</a>
+        </li>
+        {% for i in 1..pages %}
+        <li class="page-item {% if page == i %} active {% endif %}">
+          <a class="page-link" href="{{ path('recette_index', {'page': i}) }}">{{ i }}</a>
+        </li>
+        {% endfor %}
+        <li class="page-item {% if page == pages %} disabled {% endif %}">
+          <a class="page-link" href="{{ path('recette_index', {'page': page + 1}) }}">&raquo;</a>
+        </li>
+      </ul>
+    </div>
+
+
   </div>
 {% endblock %}

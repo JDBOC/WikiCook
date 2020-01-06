@@ -32,6 +32,11 @@ class Recette
     private $slug;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    private $image;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $cover;
@@ -90,6 +95,16 @@ class Recette
         $this->ingredient = new ArrayCollection();
         $this->etape = new ArrayCollection();
         $this->comments = new ArrayCollection();
+    }
+
+  /**
+   * Transition cover vers image
+   */
+    public function image()
+    {
+      if (empty($this->cover)) {
+        $this->setCover ($this->image);
+      }
     }
 
     public function moyenneDesNotes(){
@@ -335,5 +350,18 @@ class Recette
 
         return $this;
     }
+
+
+  public function getImage()
+  {
+    return $this->image;
+  }
+
+
+  public function setImage($image)
+  {
+    $this->image = $image;
+    return $this;
+  }
 
 }
