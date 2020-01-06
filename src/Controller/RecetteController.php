@@ -10,6 +10,7 @@
   use App\Repository\EtapeRepository;
   use App\Repository\IngredientRepository;
   use App\Repository\RecetteRepository;
+  use App\Service\Pagination;
   use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
   use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
   use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,17 +29,23 @@
      * @Route("/{page<\d+>?1}", name="recette_index", methods={"GET"})
      * @param RecetteRepository $recetteRepository
      * @param $page
+     * @param Pagination $pagination
      * @return Response
      */
-    public function index(RecetteRepository $recetteRepository, $page): Response
+    public function index(RecetteRepository $recetteRepository, $page, Pagination $pagination): Response
     {
-      $limit = 12;
-      $start = $page * $limit - $limit;
-      $totalPage = count($recetteRepository->findAll ());
-      $pages = ceil($totalPage / $limit);
+      $pagination->setEntityClass (Recette::class)
+                  ->setPage ($page)
+                  ->setLimit (12);
+
+      $recipes = $pagination->getData ();
+
+
+      $total = count($recetteRepository->findAll ());
+      $pages = ceil($total / 12);
 
       return $this->render ( 'recette/index.html.twig' , [
-        'recettes' => $recetteRepository->findBy ([], [], $limit, $start) ,
+        'recettes' => $recipes,
         'pages' => $pages,
         'page' => $page
       ] );

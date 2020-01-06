@@ -10,7 +10,11 @@
         <div class="col-lg-3 m-4">
           <div class="card" style="width: 18rem;">
             <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
+              {% if recette.cover is not null %}
+              <img class="card-img-top" src="{{ recette.cover }}" alt="Card image cap">
+              {% else %}
               <img class="card-img-top" src="{{ asset('images/recettes/'~recette.getImage) }}" alt="Card image cap">
+                {% endif %}
             </a>
             <div class="card-body">
               <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
