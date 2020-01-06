@@ -34,8 +34,13 @@
     {
       $limit = 12;
       $start = $page * $limit - $limit;
+      $totalPage = count($recetteRepository->findAll ());
+      $pages = ceil($totalPage / $limit);
+
       return $this->render ( 'recette/index.html.twig' , [
         'recettes' => $recetteRepository->findBy ([], [], $limit, $start) ,
+        'pages' => $pages,
+        'page' => $page
       ] );
     }
 

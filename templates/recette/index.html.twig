@@ -50,26 +50,16 @@
 
     <div class="d-flex justify-content-center">
       <ul class="pagination">
-        <li class="page-item disabled">
-          <a class="page-link" href="#">&laquo;</a>
+        <li class="page-item {% if page == 1 %} disabled {% endif %}">
+          <a class="page-link" href="{{ path('recette_index', {'page': page - 1}) }}">&laquo;</a>
         </li>
-        <li class="page-item active">
-          <a class="page-link" href="#">1</a>
+        {% for i in 1..pages %}
+        <li class="page-item {% if page == i %} active {% endif %}">
+          <a class="page-link" href="{{ path('recette_index', {'page': i}) }}">{{ i }}</a>
         </li>
-        <li class="page-item">
-          <a class="page-link" href="#">2</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">3</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">4</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">5</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="#">&raquo;</a>
+        {% endfor %}
+        <li class="page-item {% if page == pages %} disabled {% endif %}">
+          <a class="page-link" href="{{ path('recette_index', {'page': page + 1}) }}">&raquo;</a>
         </li>
       </ul>
     </div>
