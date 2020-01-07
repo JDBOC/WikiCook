@@ -22,7 +22,9 @@ margin-top: 15%;
 
     margin : auto;
 }
-
+.imgLittle{
+    max-width: 72px;
+}
 .fa-star{
     color: goldenrod;
 }

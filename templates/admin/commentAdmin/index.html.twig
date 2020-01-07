@@ -1,0 +1,56 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Admin commentaires{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="bg-light">
+            <h2 class="my-5 text-center pt-3">Administration des commentaires</h2>
+
+            <table class="table-responsive table-hover text-center">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Auteur</th>
+                    <th>Contenu</th>
+                    <th>Note</th>
+                    <th>Recette</th>
+                    <th>date de publication</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for comment in comments %}
+                    <tr>
+                        <td>{{ comment.id }}</td>
+                        <td>
+                            {% if comment.author is not null %}
+                                <img src="{{ asset('images/userImage/'~comment.author.picture) }}" alt="Avatar de {{ comment.author.surnom }}"
+                                     class="rounded-circle avatarMini">
+                                {{ comment.author }}
+                            {% else %}
+                                <img src="{{ asset('images/userImage/Ambox_blue_question.svg.png') }}" alt="Auteur anonyme" class="avatarMini">
+
+                            {% endif %}
+                        </td>
+                        <td>{{ comment.contenu }}</td>
+                        <td><span class="badge badge-secondary rounded">{{ comment.note }}</span></td>
+
+                        <td><span class="badge badge-dark rounded">{{ comment.recette.title }}</span></td>
+                        <td>{{ comment.createdAt | date('d-m-Y') }}</td>
+
+
+                        <td>
+
+                            <a href="{{ path('admin_comment_delete', {'id': comment.id}) }}" class="btn btn-outline-danger">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

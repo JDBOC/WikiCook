@@ -3,11 +3,13 @@
 {% block title %}Administration des annonces{% endblock %}
 
 {% block body %}
-  <div class="container-fluid">
-    <div class="offset-lg-1 col-lg-10 bg-light">
-      <h2 class="my-5 text-center pt-3">Administration des annonces</h2>
+  <div class="container">
 
-      <table class="table table-hover text-center">
+    <div class="bg-light d-flex justify-content-center">
+
+<div class="col-lg-10 ">
+  <h2 class="my-5 text-center pt-3 m-3">Administration des recettes</h2>
+      <table class="table-responsive table-hover text-center m-auto">
         <thead>
         <tr>
           <th>Id</th>
@@ -26,27 +28,35 @@
           <tr>
             <td>{{ recette.id }}</td>
             <td>{{ recette.title }}</td>
-            <td>{{ recette.cover }}</td>
+            <td>
+              {% if recette.cover is not null %}
+                <img class="card-img-top imgLittle" src="{{ recette.cover }}" alt="Card image cap">
+              {% else %}
+                <img class="card-img-top imgLittle" src="{{ asset('images/recettes/'~recette.getImage) }}" alt="Card image cap">
+              {% endif %}
+            </td>
             <td><span class="badge badge-success rounded">{{ recette.difficulte }}</span></td>
             <td>{{ recette.categorie }}</td>
             <td><span class="badge badge-success rounded">{{ recette.nombre }}</span></td>
 
             <td>
               {% if recette.author is not null %}
-                <img src="{{ asset('images/userImage/'~recette.author.picture) }}" alt="Avatar de {{ recette.author.surnom }}"
-                   class="rounded-circle avatarMini">
-              {{ recette.author }}
-            {% else %}
-              <img src="{{ asset('images/userImage/Ambox_blue_question.svg.png') }}" alt="Auteur anonyme" class="avatarMini">
+                <img src="{{ asset('images/userImage/'~recette.author.picture) }}"
+                     alt="Avatar de {{ recette.author.surnom }}"
+                     class="rounded-circle avatarMini">
+                {{ recette.author }}
+              {% else %}
+                <img src="{{ asset('images/userImage/Ambox_blue_question.svg.png') }}" alt="Auteur anonyme"
+                     class="avatarMini">
 
-            {% endif %}
+              {% endif %}
             </td>
-            <td>fonctionnalité à venir</td>
+            <td>{{ recette.moyenneDesNotes }}</td>
             <td>
               <a href="{{ path('admin_recette_edit', {'id': recette.id}) }}" class="btn btn-outline-dark">
                 <i class="fa fa-edit"></i>
               </a>
-              <a href="{{ path('admin_recette_delete', {'id': recette.id})}}" class="btn btn-outline-danger">
+              <a href="{{ path('admin_recette_delete', {'id': recette.id}) }}" class="btn btn-outline-danger">
                 <i class="fa fa-trash"></i>
               </a>
             </td>
@@ -54,6 +64,23 @@
         {% endfor %}
         </tbody>
       </table>
+    </div>
+
+    </div>
+    <div class="d-flex justify-content-center">
+      <ul class="pagination">
+        <li class="page-item {% if page == 1 %} disabled {% endif %}">
+          <a class="page-link" href="{{ path('admin_recette_index', {'page': page - 1}) }}">&laquo;</a>
+        </li>
+        {% for i in 1..pages %}
+          <li class="page-item {% if page == i %} active {% endif %}">
+            <a class="page-link" href="{{ path('admin_recette_index', {'page': i}) }}">{{ i }}</a>
+          </li>
+        {% endfor %}
+        <li class="page-item {% if page == pages %} disabled {% endif %}">
+          <a class="page-link" href="{{ path('admin_recette_index', {'page': page + 1}) }}">&raquo;</a>
+        </li>
+      </ul>
     </div>
   </div>
 {% endblock %}
