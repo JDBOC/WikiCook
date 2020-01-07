@@ -44,8 +44,10 @@
       <div class="card-header">{{ recette.title }}</div>
       <div>
 
+        {% if recette.cover is not null %}
+          <img class="card-img-top" src="{{ recette.cover }}" alt="Image de {{ recette.title }}">
+        {% else %}
           <img class="card-img-top" src="{{ asset('images/recettes/'~recette.getImage) }}" alt="Image de {{ recette.title }}">
-
       </div>
     </div>
     </a>

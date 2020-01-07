@@ -5,11 +5,11 @@
 {% block body %}
   <div class="container">
 
-    <div class="bg-light d-flex justify-content-center">
+    <div class="bg-light d-flex justify-content-center p-1">
 
-<div class="col-lg-10 ">
+<div class="col-lg-12 ">
   <h2 class="my-5 text-center pt-3 m-3">Administration des recettes</h2>
-      <table class="table-responsive table-hover text-center m-auto">
+      <table class="table-responsive-lg table-hover text-center m-auto">
         <thead>
         <tr>
           <th>Id</th>
@@ -53,12 +53,14 @@
             </td>
             <td>{{ recette.moyenneDesNotes }}</td>
             <td>
+              <div class="row">
               <a href="{{ path('admin_recette_edit', {'id': recette.id}) }}" class="btn btn-outline-dark">
                 <i class="fa fa-edit"></i>
               </a>
               <a href="{{ path('admin_recette_delete', {'id': recette.id}) }}" class="btn btn-outline-danger">
                 <i class="fa fa-trash"></i>
               </a>
+              </div>
             </td>
           </tr>
         {% endfor %}

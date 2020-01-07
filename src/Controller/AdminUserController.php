@@ -74,7 +74,7 @@
       $repoRecettes = $this->getDoctrine ()->getRepository ( Recette::class );
       $recetteAuthor = $repoRecettes->findBy ( ['author' => $author] );
       foreach ($recetteAuthor as $value) {
-        $value->setAuthor ( null );
+        $value->setAuthor ( $user->getSurnom () === 'Anonyme' );
         $entityManager->persist ( $value );
         $entityManager->flush ();
       }
