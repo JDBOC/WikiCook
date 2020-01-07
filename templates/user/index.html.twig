@@ -8,13 +8,13 @@
       <div class="row mt-2 align-items-center">
         <div class="col-lg-3 text-center">
 
-            <img class="rounded-circle avatar" src="{{ asset('images/userImage/'~user.picture) }}" alt="avatar">
+          <img class="rounded-circle avatar" src="{{ asset('images/userImage/'~user.picture) }}" alt="avatar">
 
           <br>
           {% if user.recettes | length < 2 %}
-          <span class="badge badge-dark">{{ user.recettes | length }} contribution</span>
+            <span class="badge badge-dark">{{ user.recettes | length }} contribution</span>
           {% else %}
-          <span class="badge badge-dark">{{ user.recettes | length }} contributions</span>
+            <span class="badge badge-dark">{{ user.recettes | length }} contributions</span>
           {% endif %}
         </div>
         <div class="col-lg-9">
@@ -35,30 +35,33 @@
       </div>
     </div>
     <h2 class="text-center mt-3">Les recettes de {{ user.surnom }}</h2>
-<div class="row justify-content-center">
-  {% if user.recettes is not empty %}
+    <div class="row justify-content-center">
+      {% if user.recettes is not empty %}
 
-  {% for recette in recettes %}
-    <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
-    <div class="card border-dark mb-4 shadow mr-md-2 ml-md-2" style="max-width: 20rem;">
-      <div class="card-header">{{ recette.title }}</div>
-      <div>
+        {% for recette in recettes %}
+          <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
+            <div class="card border-dark mb-4 shadow mr-md-2 ml-md-2" style="max-width: 20rem;">
+              <div class="card-header">{{ recette.title }}</div>
+              <div>
 
-        {% if recette.cover is not null %}
-          <img class="card-img-top" src="{{ recette.cover }}" alt="Image de {{ recette.title }}">
-        {% else %}
-          <img class="card-img-top" src="{{ asset('images/recettes/'~recette.getImage) }}" alt="Image de {{ recette.title }}">
-      </div>
+                {% if recette.cover is not null %}
+                  <img class="card-img-top" src="{{ recette.cover }}" alt="Image de {{ recette.title }}">
+                {% else %}
+                  <img class="card-img-top" src="{{ asset('images/recettes/'~recette.getImage) }}"
+                       alt="Image de {{ recette.title }}">
+                {% endif %}
+              </div>
+            </div>
+          </a>
+
+        {% endfor %}
+      {% else %}
+        <div class="alert alert-dismissible alert-primary mt-4">
+          <p class="text-center">
+            {{ user.surnom }} n'a pas encore enregistré de recette...
+          </p>
+        </div>
+      {% endif %}
     </div>
-    </a>
-  {% endfor %}
-    {% else %}
-  <div class="alert alert-dismissible alert-primary mt-4">
-    <p class="text-center">
-      {{ user.surnom }} n'a pas encore enregistré de recette...
-    </p>
-  </div>
-  {% endif %}
-</div>
   </div>
 {% endblock %}
