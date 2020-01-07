@@ -30,8 +30,16 @@
             <td><span class="badge badge-success rounded">{{ recette.difficulte }}</span></td>
             <td>{{ recette.categorie }}</td>
             <td><span class="badge badge-success rounded">{{ recette.nombre }}</span></td>
-            <td><img src="{{ recette.author.picture }}" class="rounded-circle avatar avatarMini" alt="avatar de {{ recette.author }}">
+
+            <td>
+              {% if recette.author is not null %}
+                <img src="{{ asset('images/userImage/'~recette.author.picture) }}" alt="Avatar de {{ recette.author.surnom }}"
+                   class="rounded-circle avatarMini">
               {{ recette.author }}
+            {% else %}
+              <img src="{{ asset('images/userImage/Ambox_blue_question.svg.png') }}" alt="Auteur anonyme" class="avatarMini">
+
+            {% endif %}
             </td>
             <td>fonctionnalité à venir</td>
             <td>

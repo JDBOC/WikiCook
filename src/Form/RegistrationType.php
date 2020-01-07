@@ -35,7 +35,10 @@ class RegistrationType extends CommonType
                   ] ,
                   'mimeTypesMessage' => 'téléchargez une image depuis votre bibliothèque' ,
                 ] )]])
-            ->add ('description', TextareaType::class, $this->getConfig ("description", "Description optionnelle"))
+            ->add ('description',TextareaType::class, [
+              'required' => false,
+              'label' => 'Description (optionnel)'
+            ])
             ->add('hash', PasswordType::class, $this->getConfig (" ", "Indiquez un mot de passe"))
             ->add ('passwordConfirm', PasswordType::class, $this->getConfig (" ", "Confirmez votre mot de passe"))
 

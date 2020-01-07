@@ -34,8 +34,11 @@
                   </li>
                 {% endif %}
                 <li class="list-group-item">Difficulté : {{ recette.difficulte }}</li>
-
+{% if recette.author is not null %}
                 <li class="list-group-item">Auteur : {{ recette.author.surnom }}</li>
+                {% else %}
+                  <li class="list-group-item">Contribution anonyme</li>
+                  {% endif %}
               </ul>
               <div class="row mt-2 justify-content-lg-around">
                 {% if app.user == recette.author %}
