@@ -1,0 +1,50 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration des annonces{% endblock %}
+
+{% block body %}
+  <div class="container-fluid">
+    <div class="col-lg-12 bg-light">
+      <h2 class="my-5 text-center pt-3">Administration des annonces</h2>
+
+      <table class="table table-hover text-center">
+        <thead>
+        <tr>
+          <th>Id</th>
+          <th>Surnom</th>
+          <th>Email</th>
+          <th>Description</th>
+            <th>Nbre de recettes</th>
+            <th>Nbre de commentaires</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+          <tr>
+            <td>{{ user.id }}</td>
+            <td><img src="{{ user.picture }}" class="rounded-circle avatar avatarMini"
+                     alt="avatar de {{ user.surnom }}">
+              {{ user.surnom }}
+            </td>
+            <td>{{ user.email }}</td>
+            <td><p>{{ user.description | raw}}</p></td>
+
+            <td><span class="badge badge-success rounded">{{ user.recettes|length }}</span></td>
+              <td><span class="badge badge-dark rounded">{{ user.comments|length }}</span></td>
+            <td>
+              <a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="btn btn-outline-dark">
+                <i class="fa fa-edit"></i>
+              </a>
+              <a href="{{ path('admin_user_delete', {'id': user.id}) }}" class="btn btn-outline-danger">
+                <i class="fa fa-trash"></i>
+              </a>
+            </td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock %}
+

@@ -60,6 +60,7 @@
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Recette", mappedBy="author")
+     * @ORM\JoinColumn(name="recette_author", referencedColumnName="author", nullable=true, onDelete="SET NULL")
      */
     private $recettes;
 

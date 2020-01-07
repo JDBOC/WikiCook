@@ -73,7 +73,7 @@ class Recette
     private $author;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="recette", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="recette", orphanRemoval=false)
      */
     private $comments;
 
@@ -289,7 +289,7 @@ class Recette
         return $this->author;
     }
 
-    public function setAuthor(?User $author): self
+    public function setAuthor($author): self
     {
         $this->author = $author;
 

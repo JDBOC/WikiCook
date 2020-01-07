@@ -20,12 +20,14 @@
             <div class="row m-4 align-items-center">
 
               <div class="col-lg-4">
-
+{% if recette.author is not null %}
                 <img src="{{ asset('images/userImage/'~recette.author.picture) }}" alt="Avatar de {{ recette.author.surnom }}"
                      class="rounded-circle avatarMini img-fluid">
-
+                {% else %}
+                <img src="{{ asset('images/userImage/Ambox_blue_question.svg.png') }}" alt="Auteur anonyme" class="img-fluid">
+{% endif %}
               </div>
-
+              {% if recette.author is not null %}
               <div class="col-lg-2 text-center">
                 <a href="{{ path('user_show', {'slug': recette.author.slug}) }}">
                   <p class=""><strong>{{ recette.author.surnom }}</strong>
@@ -39,6 +41,16 @@
                   </p>
                 </a>
               </div>
+              {% else %}
+
+              <div class="col-lg-2 text-center">
+
+                  <p class=""><strong>Auteur anonyme</strong></p>
+
+              </div>
+              {% endif %}
+
+
               <div class="offset-lg-2"></div>
               <div class="col-lg-4">
                 {% if app.user == recette.author %}
