@@ -11,7 +11,7 @@
         <div class="row bg-light rounded">
           <div class="col-lg-7">
             <h1 class="text-center p-lg-5">{{ recette.title }}</h1>
-            <img class="card-img-top" src="{{ asset('images/recettes/'~recette.image) }}"
+            <img class="card-img-top" src="{{ asset('images/recettes/'~recette.getImage) }}"
                  alt="Image de {{ recette.title }}">
 
             <div class="row m-4 align-items-center">
