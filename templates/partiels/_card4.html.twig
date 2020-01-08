@@ -1,4 +1,4 @@
-<div class="col-lg-3">
+<div class="col-lg-4">
   <div class="card mb-2">
     <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
       {% if recette.cover is not null %}
@@ -10,17 +10,17 @@
     <div class="card-body">
       <div class="row">
         <div class="col-lg">
-      <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
-        <h5 class="card-title">{{ recette.title }}</h5>
-      </a>
-      </div>
+          <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
+            <h5 class="card-title">{{ recette.title }}</h5>
+          </a>
+        </div>
         <div class="col-lg">
-      <div class="text-center">
-        {% if recette.comments|length > 0 %}
-          {% include 'partiels/rating.html.twig' with {'note': recette.moyenneDesNotes} %}
-        {% endif %}
-      </div>
-      </div>
+          <div class="text-center">
+            {% if recette.comments|length > 0 %}
+              {% include 'partiels/rating.html.twig' with {'note': recette.moyenneDesNotes} %}
+            {% endif %}
+          </div>
+        </div>
       </div>
 
       <ul class="list-group list-group-flush">

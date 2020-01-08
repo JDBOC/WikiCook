@@ -42,7 +42,7 @@
 
 
       $total = count($recetteRepository->findAll ());
-      $pages = ceil($total / 10);
+      $pages = ceil($total / 8);
 
       return $this->render ( 'recette/index.html.twig' , [
         'recettes' => $recipes,

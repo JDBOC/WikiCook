@@ -20,14 +20,14 @@
         <li>et bien d'autres choses encore...</li>
       </ul>
       <p class="lead">
-        <a class="btn btn-outline-dark btn-lg align-items-center" href="{{ path('recette_index') }}" role="button">Voir les recettes</a>
+        <a class="btn btn-outline-dark btn-lg" href="{{ path('recette_index') }}" role="button">Voir les recettes</a>
       </p>
     </div>
     <div class="bg-light  p-2">
       <h1 class="text-center text-dark m-md-3">Les dernières recettes ajoutées</h1>
-      <div class="row m-lg-auto">
+      <div class="row m-lg-auto d-flex align-items-center">
         {% for data in recettes %}
-            {% include 'partiels/_card.html.twig' with {'recette': data.recette} %}
+            {% include 'partiels/_card4.html.twig' with {'recette': data.recette} %}
         {% endfor %}
       </div>
     </div>

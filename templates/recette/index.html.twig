@@ -7,52 +7,11 @@
     <h1 class="text-center titre text-dark">Liste des recettes</h1>
     <div class="row">
       {% for recette in recettes %}
-        <div class="col-lg-3 m-4">
-          <div class="card" style="width: 18rem;">
-            <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
-              {% if recette.cover is not null %}
-              <img class="card-img-top" src="{{ recette.cover }}" alt="Card image cap">
-              {% else %}
-              <img class="card-img-top" src="{{ asset('images/recettes/'~recette.getImage) }}" alt="Card image cap">
-                {% endif %}
-            </a>
-            <div class="card-body">
-              <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
-                <h5 class="card-title">{{ recette.title }}
 
-                </h5>
-              </a>
-              <div class="text-center">
-                {% if recette.comments|length > 0 %}
-                  {% include 'partiels/rating.html.twig' with {'note': recette.moyenneDesNotes} %}
-                {% endif %}
-              </div>
-              <ul class="list-group list-group-flush">
-                {% if recette.categorie is not null %}
-                  <li class="list-group-item">
-                    <strong> {{ recette.categorie.title }}</strong>
-                  </li>
-                {% endif %}
-                <li class="list-group-item">Difficulté : {{ recette.difficulte }}</li>
-{% if recette.author is not null %}
-                <li class="list-group-item">Auteur : {{ recette.author.surnom }}</li>
-                {% else %}
-                  <li class="list-group-item">Contribution anonyme</li>
-                  {% endif %}
-              </ul>
-              <div class="row mt-2 justify-content-lg-around">
-                {% if app.user == recette.author %}
-                  <a href="{{ path('recette_edit', {'slug': recette.slug}) }}" class="btn btn-secondary">Modifier</a>
-                  {{ include('recette/_delete_form.html.twig') }}
-                {% endif %}
-                <a href="{{ path('recette_show', {'slug': recette.slug}) }}" class="btn btn-outline-dark"><i
-                          class="fa fa-eye" aria-hidden="true"></i> Consulter</a>
-              </div>
-            </div>
-          </div>
-        </div>
+        {% include 'partiels/_card.html.twig' %}
       {% endfor %}
     </div>
+  </div>
     <a href="{{ path('recette_new') }}">Create new</a>
 
     <div class="d-flex justify-content-center">
@@ -72,5 +31,5 @@
     </div>
 
 
-  </div>
+
 {% endblock %}
