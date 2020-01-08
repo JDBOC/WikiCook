@@ -82,7 +82,7 @@
         $slug = $slugify->slugify ( $title );
         $user = $users[mt_rand ( 0 , count ( $users ) - 1 )];
         $recette  ->setTitle ( $title )
-                  ->setCover ( 'https://loremflickr.com/520/340/recipe' )
+                  ->setImage ( 'https://loremflickr.com/520/340/recipe' )
                   ->setCategorie ( $randomCat )
                   ->setNombre ( 4 )
                   ->setDuration (mt_rand (5, 240))
