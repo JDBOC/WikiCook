@@ -59,7 +59,7 @@
      * @Route("/new", name="recette_new", methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, CategorieRepository $repository): Response
     {
       $recette = new Recette();
       $user = $this->getUser ();
@@ -105,6 +105,7 @@
 
       return $this->render ( 'recette/new.html.twig' , [
         'recette' => $recette ,
+        'categories' => $repository->findAll (),
         'form' => $form->createView () ,
       ] );
     }
@@ -159,7 +160,7 @@
      * @param Recette $recette
      * @return Response
      */
-    public function edit(Request $request , Recette $recette): Response
+    public function edit(Request $request , Recette $recette, CategorieRepository $repository): Response
     {
       $form = $this->createForm ( RecetteType::class , $recette );
       $form->handleRequest ( $request );
@@ -206,6 +207,7 @@
       return $this->render ( 'recette/edit.html.twig' , [
         'recette' => $recette ,
         'form' => $form->createView () ,
+        'categories' => $repository->findAll ()
       ] );
     }
 

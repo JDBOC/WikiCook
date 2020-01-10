@@ -10,38 +10,29 @@
     <div class="collapse navbar-collapse" id="navbarColor01">
 
 
-
-        <div class="dropdown">
-          <a class="dropdown-toggle text-white" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-             aria-haspopup="true" aria-expanded="false">
-            Recettes
-          </a>
-<ul class="dropdown-menu">
-         <li>
+      <div class="dropdown">
+        <a class="dropdown-toggle text-white" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
+           aria-haspopup="true" aria-expanded="false">
+          Recettes
+        </a>
+        <ul class="dropdown-menu">
+          <li>
             <a href="{{ path('recette_index') }}" class="dropdown-item">Toutes</a>
-  </li>
-            <div class="dropdown-divider"></div>
+          </li>
+          <div class="dropdown-divider"></div>
 
-            {% for categorie in categories %}
-              <li>
-              <a href="{{ path('categorie_show', {'id': categorie.id}) }}" class="dropdown-item">{{ categorie.title }}</a>
-              </li>
-            {% endfor %}
-</ul>
-          </div>
-
-
-
+          {% for categorie in categories %}
+            <li>
+              <a href="{{ path('categorie_show', {'id': categorie.id}) }}"
+                 class="dropdown-item">{{ categorie.title }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
 
 
 
-    </div>
-      <form class="form-inline my-2 my-lg-0">
-        <label>
-          <input class="form-control mr-sm-2" type="text" placeholder="Search">
-        </label>
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-      </form>
+
 
       <ul class="navbar-nav ml-auto">
 
@@ -74,7 +65,9 @@
         {% endif %}
       </ul>
     </div>
+
   </nav>
+
   {% for label, messages in app.flashes %}
   <div class="container">
     <div class="alert alert-{{ label }}">

@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\AccountType;
 use App\Form\PasswordUpdateType;
 use App\Form\RegistrationType;
+use App\Repository\CategorieRepository;
 use App\Repository\RecetteRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -27,14 +28,15 @@ class AccountController extends AbstractController
    * @param AuthenticationUtils $utils
    * @return Response
    */
-    public function login(AuthenticationUtils $utils)
+    public function login(AuthenticationUtils $utils, CategorieRepository $repository)
     {
       $error = $utils->getLastAuthenticationError ();
       $username = $utils->getLastUsername ();
 
         return $this->render('account/login.html.twig', [
             'hasError'  => $error !== null,
-            'username'  => $username
+            'username'  => $username,
+          'categories' => $repository->findAll ()
         ]);
     }
 
@@ -54,7 +56,7 @@ class AccountController extends AbstractController
    * @param UserPasswordEncoderInterface $encoder
    * @return Response
    */
-    public function register(Request $request, UserPasswordEncoderInterface $encoder){
+    public function register(Request $request, UserPasswordEncoderInterface $encoder, CategorieRepository $repository){
       $user = new User();
 
       $form = $this->createForm (RegistrationType::class, $user);
@@ -87,7 +89,8 @@ class AccountController extends AbstractController
       }
 
       return $this->render ('account/registration.html.twig', [
-        'form' => $form->createView ()
+        'form' => $form->createView (),
+        'categories' => $repository->findAll ()
       ]);
     }
 
@@ -97,7 +100,7 @@ class AccountController extends AbstractController
    * @param Request $request
    * @return Response
    */
-    public function profil(Request $request){
+    public function profil(Request $request, CategorieRepository $repository){
       $user = $this->getUser ();
       $form = $this->createForm (AccountType::class, $user);
       $form->handleRequest ($request);
@@ -128,7 +131,8 @@ class AccountController extends AbstractController
       }
 
       return $this->render ('account/profil.html.twig', [
-        'form' => $form->createView ()
+        'form' => $form->createView (),
+        'categories' => $repository->findAll ()
       ]);
     }
 
@@ -180,13 +184,14 @@ class AccountController extends AbstractController
    *
    * @return Response
    */
-    public function myAccount(RecetteRepository $repository) {
+    public function myAccount(RecetteRepository $repository, CategorieRepository $categorieRepository) {
 
       $user = $this->getUser ();
       $recettes = $repository->findByAuthor ($user);
       return $this->render ('user/index.html.twig', [
         'user' => $user,
-        'recettes' => $recettes
+        'recettes' => $recettes,
+        'categories' => $categorieRepository->findAll ()
       ]);
     }
 }
