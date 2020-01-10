@@ -6,6 +6,7 @@ use App\Entity\Categorie;
 use App\Form\CategorieType;
 use App\Repository\CategorieRepository;
 use App\Repository\RecetteRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,6 +19,7 @@ class CategorieController extends AbstractController
 {
     /**
      * @Route("/", name="categorie_index", methods={"GET"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function index(CategorieRepository $categorieRepository): Response
     {
@@ -28,6 +30,7 @@ class CategorieController extends AbstractController
 
     /**
      * @Route("/new", name="categorie_new", methods={"GET","POST"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function new(Request $request): Response
     {
@@ -51,6 +54,7 @@ class CategorieController extends AbstractController
 
   /**
    * @Route("/categorie/{id}", name="categorie_show")
+   * @Security("is_granted('ROLE_ADMIN')")
    * @param Categorie $categorie
    * @param CategorieRepository $categorieRepository
    * @return Response
@@ -68,6 +72,7 @@ class CategorieController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="categorie_edit", methods={"GET","POST"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function edit(Request $request, Categorie $categorie): Response
     {
@@ -88,6 +93,7 @@ class CategorieController extends AbstractController
 
     /**
      * @Route("/{id}", name="categorie_delete", methods={"DELETE"})
+     * @Security("is_granted('ROLE_ADMIN')")
      */
     public function delete(Request $request, Categorie $categorie): Response
     {
