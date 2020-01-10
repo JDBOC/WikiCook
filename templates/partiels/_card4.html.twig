@@ -1,5 +1,5 @@
-<div class="col-lg-4">
-  <div class="card mb-2">
+<div class="col-lg-4 w-100">
+  <div class="card mb-2 p-2">
     <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
       {% if recette.cover is not null %}
         <img class="card-img-top" src="{{ recette.cover }}" alt="Card image cap">
@@ -11,7 +11,7 @@
       <div class="row">
         <div class="col-lg">
           <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
-            <h5 class="card-title">{{ recette.title }}</h5>
+            <h5 class="card-title text-dark">{{ recette.title }}</h5>
           </a>
         </div>
         <div class="col-lg">

@@ -46,11 +46,14 @@
       //gestion utilisateurs
       $users = [];
       $genres = ['male' , 'female'];
+
       $cat = array("Entrée" , "Plat principal" , "Dessert" , "Encas" , "Ptit déj");
       $categories = [];
       foreach ($cat as $value) {
+        $slug = $slugify->slugify ( $value );
         $categorie = new Categorie();
-        $categorie->setTitle ( $value );
+        $categorie->setTitle ( $value )
+                  ->setSlug ($slug);
         $manager->persist ( $categorie );
         $categories [] = $categorie;
       }
@@ -82,7 +85,7 @@
         $slug = $slugify->slugify ( $title );
         $user = $users[mt_rand ( 0 , count ( $users ) - 1 )];
         $recette  ->setTitle ( $title )
-                  ->setImage ( 'https://loremflickr.com/520/340/recipe' )
+                  ->setImage ( 'foodimage.jpeg')
                   ->setCategorie ( $randomCat )
                   ->setNombre ( 4 )
                   ->setDuration (mt_rand (5, 240))

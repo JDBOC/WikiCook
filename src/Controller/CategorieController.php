@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Categorie;
 use App\Form\CategorieType;
 use App\Repository\CategorieRepository;
+use App\Repository\RecetteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,15 +49,22 @@ class CategorieController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="categorie_show", methods={"GET"})
-     */
-    public function show(Categorie $categorie): Response
-    {
-        return $this->render('categorie/show.html.twig', [
-            'categorie' => $categorie,
-        ]);
-    }
+  /**
+   * @Route("/categorie/{id}", name="categorie_show")
+   * @param Categorie $categorie
+   * @param CategorieRepository $categorieRepository
+   * @return Response
+   */
+  public function showCat(Categorie $categorie, CategorieRepository $categorieRepository, RecetteRepository $recetteRepository): Response
+  {
+
+    return $this->render('categorie/show.html.twig', [
+      'categories' => $categorieRepository->findAll (),
+      'recettes' => $recetteRepository->findByCategorie ($categorie),
+      'slug' => $categorie->getSlug (),
+      'categorie' => $categorie
+    ]);
+  }
 
     /**
      * @Route("/{id}/edit", name="categorie_edit", methods={"GET","POST"})

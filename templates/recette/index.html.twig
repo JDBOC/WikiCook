@@ -3,13 +3,14 @@
 {% block title %}Recette index{% endblock %}
 
 {% block body %}
+  {% include 'partiels/header.html.twig' %}
   <div class="container">
     <h1 class="text-center titre text-dark">Liste des recettes</h1>
-    <div class="row">
-      {% for recette in recettes %}
+    <div class="row overflow-auto">
 
-        {% include 'partiels/_card.html.twig' %}
-      {% endfor %}
+{% for recette in recettes %}
+        {% include 'partiels/_card4.html.twig' %}
+{% endfor %}
     </div>
   </div>
     <a href="{{ path('recette_new') }}">Create new</a>

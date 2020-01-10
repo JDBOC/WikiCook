@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Cocur\Slugify\Slugify;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -28,6 +29,11 @@ class Categorie
      */
     private $recettes;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $slug;
+
     public function __construct()
     {
         $this->recettes = new ArrayCollection();
@@ -36,6 +42,22 @@ class Categorie
   public function __toString()
   {
     return (string) $this->getTitle();
+  }
+
+  /**
+   * permet slug
+   *
+   * @ORM\PrePersist
+   * @ORM\PreUpdate
+   *
+   * @return void
+   */
+  public function initializeSlug()
+  {
+    if (empty( $this->slug )) {
+      $slugify = new Slugify();
+      $this->slug = $slugify->slugify ( $this->title );
+    }
   }
 
     public function getId(): ?int
@@ -82,6 +104,18 @@ class Categorie
                 $recette->setCategorie(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }
