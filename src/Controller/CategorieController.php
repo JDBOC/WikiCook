@@ -54,7 +54,7 @@ class CategorieController extends AbstractController
 
   /**
    * @Route("/categorie/{id}", name="categorie_show")
-   * @Security("is_granted('ROLE_ADMIN')")
+   *
    * @param Categorie $categorie
    * @param CategorieRepository $categorieRepository
    * @return Response

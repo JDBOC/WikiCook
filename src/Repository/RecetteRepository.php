@@ -39,4 +39,17 @@ class RecetteRepository extends ServiceEntityRepository
   }
 
 
+  public function findBySearch()
+  {
+    return $this->createQueryBuilder ('search')
+                ->select ('recette as recette, r.title as t, r.ingredient as i')
+
+
+                ->getQuery ()
+                ->getResult ();
+    }
+
+
 }
+
+
