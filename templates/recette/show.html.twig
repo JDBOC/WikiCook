@@ -149,7 +149,7 @@
             <div class="card-header">Auteur : {{ comment.author }}</div>
             <div class="card-body">
               <h4 class="card-title small">Note :
-                {% include 'partiels/rating.html.twig' with {'note': recette.moyenneDesNotes} %}
+                {% include 'partiels/rating.html.twig' with {'note': comment.note} %}
               </h4>
               <p class="card-text" onscroll="this">{{ comment.contenu }}</p>
             </div>
