@@ -2,9 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Recette;
+use App\Form\RechercheType;
 use App\Repository\CategorieRepository;
 use App\Repository\RecetteRepository;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -12,21 +17,33 @@ class SearchController extends AbstractController
 {
   /**
    * @Route("/search", name="search")
-   * @param RecetteRepository $repository
+   * @param Request $request
    * @param CategorieRepository $categorieRepository
+   * @param RecetteRepository $recetteRepository
    * @return Response
    */
-    public function index(RecetteRepository $repository, CategorieRepository $categorieRepository)
+    public function index(Request $request, CategorieRepository $categorieRepository, RecetteRepository $recetteRepository)
     {
-      if (isset($_GET['#recherche'])) {
-        $motclef = $_GET['#recherche'];
-        $q = array('recherche' => $motclef. '%');
+      $form = $this->createForm (RechercheType::class);
+      $form->handleRequest ($request);
 
-      }
-        return $this->render('search/index.html.twig', [
-            'categories' => $categorieRepository->findAll (),
-            'resultats' => $resultats = $repository->findBySearch ()
+      if ($form->isSubmitted () && $form->isValid ()){
+        $recherche = $form->getData ();
+        $results = $recetteRepository->findByRecherche ($recherche);
 
+        return $this->render ('search/results.html.twig', [
+
+          'categories' => $categorieRepository->findAll (),
+          'recettes' => $results
         ]);
+      }
+
+      return $this->render ('partiels/header.html.twig', [
+        'form' => $form->createView (),
+        'categories' => $categorieRepository->findAll (),
+
+      ]);
     }
+
+
 }

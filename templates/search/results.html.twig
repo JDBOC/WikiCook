@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Résultats de la recherche{% endblock %}
+
+{% block body %}
+
+
+<div class="container">
+  <h1 class="text-dark text-center">Résultats de votre recherche</h1>
+  {% for recette in recettes %}
+
+    {% include 'partiels/_card.html.twig' %}
+  {% endfor %}
+</div>
+{% endblock %}

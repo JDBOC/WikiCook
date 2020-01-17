@@ -5,8 +5,11 @@ namespace App\Repository;
 use App\Entity\Recette;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Doctrine\ORM\QueryBuilder;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\expr;
 
 /**
  * @method Recette|null find($id, $lockMode = null, $lockVersion = null)
@@ -39,16 +42,36 @@ class RecetteRepository extends ServiceEntityRepository
   }
 
 
-  public function findBySearch()
+  public function findBySearch($recherche): Query
   {
-    return $this->createQueryBuilder ('search')
-                ->select ('recette as recette, r.title as t, r.ingredient as i')
 
 
-                ->getQuery ()
-                ->getResult ();
+    $qb = $this->createQueryBuilder('r');
+        $qb->add('where', $qb->expr()->orX(
+          $qb->expr()->like('r.title', $recherche['recherche']),
+          $qb->expr()->like('r.ingredient', $recherche['recherche'])
+
+        ))
+          ->setParameter('recherche', $recherche['recherche'])
+          ->orderBy('r.title', 'DESC')
+        ;
+        return $qb->getQuery();
     }
 
+    public function findByRecherche($recherche)
+    {
+      return $this->createQueryBuilder ('r')
+        ->leftJoin ('r.ingredient', 'i')
+        ->where ('i.title LIKE :iTitle')
+        ->setParameter ('iTitle', '%'.$recherche['recherche'].'%')
+        ->orWhere ('r.title LIKE :rTitle')
+        ->setParameter ('rTitle', '%'.$recherche['recherche'].'%')
+        ->orderBy ('r.title', 'DESC')
+        ->getQuery ()
+        ->getResult ();
+
+
+    }
 
 }
 
