@@ -57,7 +57,6 @@ class CategorieController extends AbstractController
    *
    * @param Categorie $categorie
    * @param CategorieRepository $categorieRepository
-   * @param RecetteRepository $recetteRepository
    * @return Response
    */
   public function showCat(Categorie $categorie, CategorieRepository $categorieRepository, RecetteRepository $recetteRepository): Response
