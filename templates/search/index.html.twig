@@ -5,23 +5,13 @@
 {% block body %}
 
 
-<div class="example-wrapper">
+<div class="container">
     <h1>Hello </h1>
-    <form class="form-inline my-2 my-lg-0">
-        <div class="search">
-            <input class="form-control mr-sm-2" type="text" name="recherche" placeholder="Search" id="recherche">
-            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-        </div>
-        <div class="result" id="result">
-
-        </div>
-
-    </form>
-
-
-    {% for resultat in resultats %}
-    <h2>{{ resultats }}</h2>
-
-
+{{ form_start(form) }}
+{{ form_row(form.recherche) }}
+    <button type="submit" class="btn btn-info">
+        Rechercher
+    </button>
+    {{ form_end(form) }}
 </div>
 {% endblock %}

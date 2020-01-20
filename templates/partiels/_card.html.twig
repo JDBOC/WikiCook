@@ -9,18 +9,19 @@
     </a>
     <div class="card-body">
       <div class="row">
-        <div class="col-lg">
-      <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
-        <h5 class="card-title text-dark">{{ recette.title }}</h5>
-      </a>
-      </div>
-        <div class="col-lg">
-      <div class="text-center">
-        {% if recette.comments|length > 0 %}
-          {% include 'partiels/rating.html.twig' with {'note': recette.moyenneDesNotes} %}
-        {% endif %}
-      </div>
-      </div>
+
+          <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
+            <h5 class="card-title text-dark">{{ recette.title }}</h5>
+          </a>
+        <br>
+
+
+          <div class="text-center">
+            {% if recette.comments|length > 0 %}
+              {% include 'partiels/rating.html.twig' with {'note': recette.moyenneDesNotes} %}
+            {% endif %}
+          </div>
+
       </div>
 
       <ul class="list-group list-group-flush">
