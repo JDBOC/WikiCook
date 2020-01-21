@@ -7,16 +7,11 @@
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
   <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
-
-
-
   {% block stylesheets %}{% endblock %}
 </head>
 {% block header %}
-
-{% include 'partiels/header.html.twig' %}
+  {% include 'partiels/header.html.twig' %}
 {% endblock %}
-
 
 {% block body %}
 
@@ -36,5 +31,4 @@
 <script src="{{ asset('js/search.js') }}"></script>
 <script src="{{ asset('js/etapeGestion.js') }}"></script>
 {% block javascripts %}{% endblock %}
-
 </html>

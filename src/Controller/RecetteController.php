@@ -62,7 +62,7 @@
      * @param CategorieRepository $repository
      * @return Response
      */
-    public function new(Request $request, CategorieRepository $repository): Response
+    public function new(Request $request , CategorieRepository $repository): Response
     {
       $recette = new Recette();
       $user = $this->getUser ();
@@ -108,7 +108,7 @@
 
       return $this->render ( 'recette/new.html.twig' , [
         'recette' => $recette ,
-        'categories' => $repository->findAll (),
+        'categories' => $repository->findAll () ,
         'form' => $form->createView () ,
       ] );
     }
@@ -164,7 +164,7 @@
      * @param CategorieRepository $repository
      * @return Response
      */
-    public function edit(Request $request , Recette $recette, CategorieRepository $repository): Response
+    public function edit(Request $request , Recette $recette , CategorieRepository $repository): Response
     {
       $form = $this->createForm ( RecetteType::class , $recette );
       $form->handleRequest ( $request );

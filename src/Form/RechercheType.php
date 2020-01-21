@@ -11,19 +11,17 @@
 
   class RechercheType extends CommonType
   {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder , array $options)
     {
       $builder
-        ->add('recherche', TextType::class, $this->getConfig (' ', "indiquez une recette ou un ingrédient"))
-        ->add ('soumettre', SubmitType::class)
-
-      ;
+        ->add ( 'recherche' , TextType::class , $this->getConfig ( ' ' , "indiquez une recette ou un ingrédient" ) )
+        ->add ( 'soumettre' , SubmitType::class );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-      $resolver->setDefaults([
+      $resolver->setDefaults ( [
         // Configure your form options here
-      ]);
+      ] );
     }
   }
