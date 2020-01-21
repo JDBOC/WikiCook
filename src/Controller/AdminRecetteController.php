@@ -2,6 +2,8 @@
 
   namespace App\Controller;
 
+  use App\Entity\Etape;
+  use App\Entity\Ingredient;
   use App\Entity\Recette;
   use App\Form\RecetteType;
   use App\Repository\RecetteRepository;
@@ -67,6 +69,7 @@
     public function delete(Recette $recette)
     {
       $entityManager = $this->getDoctrine ()->getManager ();
+
       $entityManager->remove ( $recette );
       $entityManager->flush ();
 

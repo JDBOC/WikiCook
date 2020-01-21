@@ -73,7 +73,7 @@ class Recette
     private $author;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="recette", orphanRemoval=false)
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="recette", orphanRemoval=true)
      */
     private $comments;
 
