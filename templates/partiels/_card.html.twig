@@ -1,11 +1,13 @@
-<div class="col-lg-3 d-flex align-items-stretch">
+<div class="col-lg-3 d-flex align-items-lg-stretch">
   <div class="card mb-2 p-1">
     <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
+      <div>
       {% if recette.cover is not null %}
-        <img class="card-img-top" src="{{ recette.cover }}" alt="Card image cap">
+        <img class="img-thumbnail" src="{{ recette.cover }}" alt="Card image cap">
       {% else %}
-        <img class="card-img-top" src="{{ asset('images/recettes/'~recette.getImage) }}" alt="Card image cap">
+        <img class="img-thumbnail" src="{{ asset('images/recettes/'~recette.getImage) }}" alt="Card image cap">
       {% endif %}
+  </div>
     </a>
     <div class="card-body">
       <div class="row">
