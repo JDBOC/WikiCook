@@ -5,13 +5,20 @@
 {% block body %}
 
 
-<div class="container">
-    <h1>Hello </h1>
-{{ form_start(form) }}
-{{ form_row(form.recherche) }}
-    <button type="submit" class="btn btn-info">
-        Rechercher
-    </button>
-    {{ form_end(form) }}
-</div>
+  <div class="container d-flex align-items-stretch">
+    <div class="col-md-12 bg-light rounded p-4 mt-5">
+      <h3 class="text-dark text-center mb-lg-4 text-justify">Recherche</h3>
+      {{ form_start(form) }}
+      <div class="row d-flex align-items-center">
+        <div class="col-lg-10">
+          {{ form_widget(form.recherche) }}
+        </div>
+        <div class="col-lg-2">
+          {{ form_widget(form.soumettre, {'label': 'Rechercher'}) }}
+        </div>
+      </div>
+      {{ form_end(form) }}
+    </div>
+  </div>
+
 {% endblock %}

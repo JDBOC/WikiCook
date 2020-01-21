@@ -22,27 +22,34 @@
      * @param RecetteRepository $recetteRepository
      * @return Response
      */
-    public function index(Request $request, CategorieRepository $categorieRepository, RecetteRepository $recetteRepository)
+    public function index(Request $request , CategorieRepository $categorieRepository , RecetteRepository $recetteRepository)
     {
-      $form = $this->createForm (RechercheType::class);
-      $form->handleRequest ($request);
+      $form = $this->createForm ( RechercheType::class );
+      $form->handleRequest ( $request );
 
-      if ($form->isSubmitted () && $form->isValid ()){
+      if ($form->isSubmitted () && $form->isValid ()) {
         $recherche = $form->getData ();
-        $results = $recetteRepository->findByRecherche ($recherche);
+        $terme = $recherche;
+        $results = $recetteRepository->findByRecherche ( $recherche );
+        if (!$results ){
+          $this->addFlash ('danger', "aucun résultat pour cette recherche");
+        }
+          return $this->render ( 'search/results.html.twig' , [
 
-        return $this->render ('search/results.html.twig', [
+            'categories' => $categorieRepository->findAll () ,
+            'recettes' => $results,
+            'recherche' => $terme
 
-          'categories' => $categorieRepository->findAll (),
-          'recettes' => $results
-        ]);
-      }
+          ] );
 
-      return $this->render ('search/index.html.twig', [
-        'form' => $form->createView (),
-        'categories' => $categorieRepository->findAll (),
 
-      ]);
+        }
+
+      return $this->render ( 'search/index.html.twig' , [
+        'form' => $form->createView () ,
+        'categories' => $categorieRepository->findAll () ,
+
+      ] );
     }
 
 

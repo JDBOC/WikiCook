@@ -5,64 +5,69 @@
 {% block body %}
   <div class="container bg-light pb-3">
 
-    <h2 class="my-5 text-center pt-3 m-3">Résultat de la recherche</h2>
-    <table class="col-lg-12 table-responsive-lg table-hover text-center m-auto">
-      <thead>
-      <tr>
-        <th>Titre</th>
-        <th>Image</th>
-        <th>catégorie</th>
-        <th>difficulté</th>
-        <th>Note Moyenne</th>
-        <th>Auteur</th>
-
-      </tr>
-      </thead>
-      <tbody>
-      {% for recette in recettes %}
-        <tr class="m-5">
-
-          <td>
-            <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
-            {{ recette.title }}
-            </a>
-          </td>
-          <td>
-            <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
-            {% if recette.cover is not null %}
-              <img class="card-img-top imgLittle p-1" src="{{ recette.cover }}" alt="Card image cap">
-            {% else %}
-              <img class="card-img-top imgLittle" src="{{ asset('images/recettes/'~recette.getImage) }}"
-                   alt="Card image cap">
-            {% endif %}
-            </a>
-          </td>
-
-
-          <td>{{ recette.categorie }}</td>
-          <td><span class="badge badge-success rounded">{{ recette.difficulte }}</span></td>
-          <td>
-            {% if recette.moyenneDesNotes != 0 %}
-              <span class="badge badge-dark rounded">{{ recette.moyenneDesNotes }}</span>
-            {% else %}
-              <p>Pas encore été notée</p>
-            {% endif %}
-          </td>
-          <td>
-            {% if recette.author is not null %}
-              <img src="{{ asset('images/userImage/'~recette.author.picture) }}"
-                   alt="Avatar de {{ recette.author.surnom }}"
-                   class="rounded-circle avatarMini">
-              {{ recette.author }}
-            {% else %}
-              <img src="{{ asset('images/userImage/Ambox_blue_question.svg.png') }}" alt="Auteur anonyme"
-                   class="avatarMini">
-            {% endif %}
-          </td>
+    <h2 class="my-5 text-center pt-3 m-3">Résultat de votre recherche</h2>
+    {% if recettes != 0 %}
+      <table class="col-lg-12 table-responsive-lg table-hover text-center m-auto">
+        <thead>
+        <tr>
+          <th>Titre</th>
+          <th>Image</th>
+          <th>catégorie</th>
+          <th>difficulté</th>
+          <th>Note Moyenne</th>
+          <th>Auteur</th>
 
         </tr>
-      {% endfor %}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+        {% for recette in recettes %}
+          <tr class="m-5">
+
+            <td>
+              <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
+                {{ recette.title }}
+              </a>
+            </td>
+            <td>
+              <a href="{{ path('recette_show', {'slug': recette.slug}) }}">
+                {% if recette.cover is not null %}
+                  <img class="card-img-top imgLittle p-1" src="{{ recette.cover }}" alt="Card image cap">
+                {% else %}
+                  <img class="card-img-top imgLittle" src="{{ asset('images/recettes/'~recette.getImage) }}"
+                       alt="Card image cap">
+                {% endif %}
+              </a>
+            </td>
+
+
+            <td>{{ recette.categorie }}</td>
+            <td><span class="badge badge-success rounded">{{ recette.difficulte }}</span></td>
+            <td>
+              {% if recette.moyenneDesNotes != 0 %}
+                <span class="badge badge-dark rounded">{{ recette.moyenneDesNotes }}</span>
+              {% else %}
+                <p>Pas encore été notée</p>
+              {% endif %}
+            </td>
+            <td>
+              {% if recette.author is not null %}
+                <img src="{{ asset('images/userImage/'~recette.author.picture) }}"
+                     alt="Avatar de {{ recette.author.surnom }}"
+                     class="rounded-circle avatarMini">
+                {{ recette.author }}
+              {% else %}
+                <img src="{{ asset('images/userImage/Ambox_blue_question.svg.png') }}" alt="Auteur anonyme"
+                     class="avatarMini">
+              {% endif %}
+            </td>
+
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <span class="badge-info">Aucune recette corresponsdante</span>
+    {% endif %}
   </div>
+
 {% endblock %}
