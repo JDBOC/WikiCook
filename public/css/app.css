@@ -41,7 +41,9 @@ margin-top: 15%;
     background-color: darksalmon;
     align-items: self-end;
 }
-
+.icon{
+    max-width: 17px;
+}
 .avatarMini{
     max-width: 28px;
 }

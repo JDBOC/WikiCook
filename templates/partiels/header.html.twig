@@ -36,8 +36,7 @@
               <i class="fas fa-search text-white"></i>
             </a>
           </div>
-          <div class="result" id="result">
-          </div>
+
         </form>
       </div>
       <ul class="navbar-nav ml-auto">
@@ -76,7 +75,7 @@
   {% for label, messages in app.flashes %}
   <div class="container">
 
-    <div class="alert alert-{{ label }} col-lg-10 m-auto">
+    <div class="alert alert-{{ label }} col-lg-8 m-auto">
       {% for message in messages %}
         <p class="text-center text-dark font-weight-bold">{{ message | raw }}</p>
       {% endfor %}

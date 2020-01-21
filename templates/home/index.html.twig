@@ -4,7 +4,6 @@
 
 {% block body %}
   <div class="container">
-
     <div class="jumbotron jumbo">
       <h1 class="text-dark">Bienvenue sur <strong>WikiCook</strong></h1>
       <p class="lead">Partagez vos recettes préférées et trouvez de nouvelles idées</p>
@@ -12,11 +11,11 @@
       <p>Ceci est un projet bac à sable, il sera amené à évoluer dans le temps avec l'implémentation de nouvelles
         fonctionnalités comme</p>
       <ul>
-        <li>la recherche par mots clés</li>
-        <li>la recherche par type de plat et/ou par ingrédients</li>
-        <li>l'upload direct d'image</li>
+        <li>la recherche par mots clés  <i class="far fa-check-square text-success"></i></li>
+        <li>la recherche par type de plat et/ou par ingrédients  <i class="far fa-check-square text-success"></i></li>
+        <li>l'upload direct d'image  <i class="far fa-check-square text-success"></i></li>
         <li>l'importation de la liste d'ingrédients par mail</li>
-        <li>Une pagination dynamique</li>
+        <li>Une pagination dynamique  <i class="far fa-check-square text-success"></i></li>
         <li>et bien d'autres choses encore...</li>
       </ul>
       <p class="lead">
@@ -25,7 +24,7 @@
     </div>
     <div class="bg-light  p-2">
       <h1 class="text-center text-dark m-md-3">Les dernières recettes ajoutées</h1>
-      <div class="row m-lg-auto d-flex align-items-center">
+      <div class="row m-lg-auto">
         {% for data in recettes %}
             {% include 'partiels/_card4.html.twig' with {'recette': data.recette} %}
         {% endfor %}
