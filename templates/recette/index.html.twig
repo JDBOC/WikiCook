@@ -3,34 +3,42 @@
 {% block title %}Recette index{% endblock %}
 
 {% block body %}
-  {% include 'partiels/header.html.twig' %}
+
+
+
   <div class="container">
+
     <h1 class="text-center titre text-dark">Liste des recettes</h1>
     <div class="row overflow-auto">
 
-{% for recette in recettes %}
+      {% for recette in recettes %}
         {% include 'partiels/_card.html.twig' %}
-{% endfor %}
+      {% endfor %}
     </div>
   </div>
 
 
-    <div class="d-flex justify-content-center">
-      <ul class="pagination">
-        <li class="page-item {% if page == 1 %} disabled {% endif %}">
-          <a class="page-link" href="{{ path('recette_index', {'page': page - 1}) }}">&laquo;</a>
-        </li>
-        {% for i in 1..pages %}
+  <div><a id="cRetour" class="cInvisible" href="#haut"><i class="far fa-arrow-alt-circle-up fa-2x"></i></a></div>
+  <div class="d-flex justify-content-center">
+    <ul class="pagination">
+      <li class="page-item {% if page == 1 %} disabled {% endif %}">
+        <a class="page-link" href="{{ path('recette_index', {'page': page - 1}) }}">&laquo;</a>
+      </li>
+      {% for i in 1..pages %}
         <li class="page-item {% if page == i %} active {% endif %}">
           <a class="page-link" href="{{ path('recette_index', {'page': i}) }}">{{ i }}</a>
         </li>
-        {% endfor %}
-        <li class="page-item {% if page == pages %} disabled {% endif %}">
-          <a class="page-link" href="{{ path('recette_index', {'page': page + 1}) }}">&raquo;</a>
-        </li>
-      </ul>
-    </div>
+      {% endfor %}
+      <li class="page-item {% if page == pages %} disabled {% endif %}">
+        <a class="page-link" href="{{ path('recette_index', {'page': page + 1}) }}">&raquo;</a>
+      </li>
+    </ul>
+  </div>
 
 
+
+{% endblock %}
+
+{% block javascripts %}
 
 {% endblock %}
