@@ -3,12 +3,12 @@
 {% block title %}Hello SearchController!{% endblock %}
 
 {% block body %}
-
-    <div class="col-md-8 m-auto bg-light rounded p-1">
+  <div class="container d-flex align-items-stretch">
+    <div class="col-md-8 m-auto bg-light rounded pt-2 pb-2">
       <h3 class="text-dark text-center mb-lg-4 text-justify">Recherche</h3>
       {{ form_start(form) }}
-      <div class="row d-flex align-items-center">
-        <div class="col-lg-10">
+      <div class="row d-flex justify-content-center">
+        <div class="col-lg-8">
           {{ form_widget(form.recherche) }}
         </div>
         <div class="col-lg-2">
@@ -18,4 +18,5 @@
       {{ form_end(form) }}
     </div>
 
+  </div>
 {% endblock %}
