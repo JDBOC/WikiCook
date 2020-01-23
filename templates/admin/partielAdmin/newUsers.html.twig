@@ -1,0 +1,46 @@
+<div class="bg-light col-lg-4 p-2">
+  <h2 class="text-center text-dark">Derniers inscrits</h2>
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Surnom</th>
+      <th>Date d'inscription</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in newusers %}
+      <tr>
+        <td>{{ user.id }}</td>
+        <td>
+          <a href="{{ path('user_show', {'slug': user.slug}) }}">
+            <img class="card-img-top rounded-circle avatarMini"
+                 src="{{ asset('images/userImage/'~user.picture) }}"
+                 alt="Card image cap">
+            {{ user.surnom }}
+          </a>
+        </td>
+
+        <td>{{ user.registerAt | date('d/m/Y h:m') }}</td>
+        <td>
+          <div class="row">
+
+            <a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="btn btn-outline-dark btn-sm">
+              <i class="fa fa-edit"></i>
+            </a>
+
+
+            <a href="{{ path('admin_user_delete', {'id': user.id}) }}" class="btn btn-outline-danger btn-sm">
+              <i class="fa fa-trash"></i>
+            </a>
+
+
+          </div>
+        </td>
+
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>

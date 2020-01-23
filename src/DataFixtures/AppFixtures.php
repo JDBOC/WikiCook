@@ -73,6 +73,7 @@
               ->setDescription ( '<p>' . join ( '</p><p>' , $faker->paragraphs ( 3 ) ) . '</p>' )
               ->setPicture ( $picture );
 
+
         $manager->persist ( $user );
         $users[] = $user;
       }

@@ -7,7 +7,7 @@
     <div class="bg-light">
       <h2 class="my-5 text-center pt-3">Administration des utilisateurs</h2>
 
-      <table class="table-responsive table-hover text-center">
+      <table class="table table-responsive-lg table-hover text-center">
         <thead>
         <tr>
           <th>Id</th>
@@ -34,16 +34,16 @@
             <td><span class="badge badge-dark rounded">{{ user.comments|length }}</span></td>
             <td>
               <div class="row">
-                <div class="col">
+
                   <a href="{{ path('admin_user_edit', {'id': user.id}) }}" class="btn btn-outline-dark">
                     <i class="fa fa-edit"></i>
                   </a>
-                </div>
-                <div class="col">
+
+
                   <a href="{{ path('admin_user_delete', {'id': user.id}) }}" class="btn btn-outline-danger">
                     <i class="fa fa-trash"></i>
                   </a>
-                </div>
+
               </div>
             </td>
           </tr>

@@ -19,6 +19,21 @@ class UserRepository extends ServiceEntityRepository
         parent::__construct($registry, User::class);
     }
 
+  /**
+   * @param $limit
+   * @return User[]
+   */
+    public function findUserByDate($limit): array
+    {
+      return $this->createQueryBuilder ('u')
+                  ->select ('u')
+                  ->groupBy ('u')
+                  ->orderBy ('u.registerAt', 'DESC')
+                  ->setMaxResults ($limit)
+                  ->getQuery ()
+                  ->getResult ();
+      }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */

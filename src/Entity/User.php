@@ -3,6 +3,7 @@
   namespace App\Entity;
 
   use Cocur\Slugify\Slugify;
+  use DateTime;
   use Doctrine\Common\Collections\ArrayCollection;
   use Doctrine\Common\Collections\Collection;
   use Doctrine\ORM\Mapping as ORM;
@@ -79,12 +80,32 @@
      */
     private $comments;
 
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $registerAt;
+
+
+
     public function __construct()
     {
       $this->recettes = new ArrayCollection();
       $this->userRoles = new ArrayCollection();
       $this->comments = new ArrayCollection();
     }
+
+    /**
+     * permet mise en place de la date de création
+     *
+     * @ORM\PrePersist()
+     * @return void
+     */
+    public function prePersist() {
+      if (empty($this->registerAt)) {
+        $this->registerAt = new DateTime();
+      }
+    }
+
 
     /**
      * génération auto du slug
@@ -305,4 +326,18 @@
 
         return $this;
     }
+
+    public function getRegisterAt(): ?\DateTimeInterface
+    {
+        return $this->registerAt;
+    }
+
+    public function setRegisterAt(?\DateTimeInterface $registerAt): self
+    {
+        $this->registerAt = $registerAt;
+
+        return $this;
+    }
+
+
   }

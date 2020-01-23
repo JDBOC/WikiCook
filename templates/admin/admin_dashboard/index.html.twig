@@ -4,64 +4,21 @@
 
 
 {% block body %}
-    <style>
-        .dashboard{
-            margin-top: 12%;
-        }
-    </style>
-<div class="container-fluid">
-    <div class="row col-lg-10 dashboard">
-        <div class="col-lg-1">&nbsp;</div>
-        <div class="col">
-            <div class="card bg-light text-dark text-center mt-lg-4">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <i class="fas fa-book-open fa-5x"></i>
-                        </div>
-                        <div class="col-lg-8">
-                            <h4 class="card-title">
-                                {{ stats.recettes }} recettes
-                            </h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card bg-light text-dark text-center mt-lg-4">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <i class="fas fa-users fa-5x"></i>
-                        </div>
-                        <div class="col-lg-8">
-                            <h4 class="card-title">
-                                {{ stats.users }} utilisateurs inscrits
-                            </h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card bg-light text-dark text-center mt-lg-4">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <i class="fas fa-comments fa-5x"></i>
-                        </div>
-                        <div class="col-lg-8">
-                            <h4 class="card-title">
-                                 {{ stats.comments }} commentaires
-                            </h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <style>
+    .dashboard {
+      margin-top: 8%;
+    }
+  </style>
+  <div class="container">
+    <div class="row dashboard">
 
+
+    <div class="row">
+      {% include 'admin/partielAdmin/newUsers.html.twig' %}
+      <div class="col-lg-1">&nbsp;</div>
+{% include'admin/partielAdmin/newRecettes.html.twig' %}
     </div>
 
-</div>
+    </div>
+  </div>
 {% endblock %}

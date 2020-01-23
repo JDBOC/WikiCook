@@ -1,0 +1,59 @@
+<div class="bg-light col-lg-7 p-2">
+  <h2 class="text-center text-dark">Dernières publications</h2>
+  <table class="table table-hover text-center align-items-center">
+    <thead>
+    <tr>
+      <th>Id</th>
+      <th>Recette</th>
+      <th>Date de publication</th>
+      <th>Catégorie</th>
+      <th>Auteur</th>
+
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for recette in newrecettes %}
+      <tr>
+        <td>{{ recette.id }}</td>
+        <td>
+          <a href="{{ path('recette_show', {'slug': recette.slug}) }}" target="_blank">
+          {% if recette.cover is not null %}
+            <img class="img-thumbnail" src="{{ recette.cover }}" alt="Card image cap" style="width: 50%">
+          {% else %}
+            <img class="img-thumbnail" src="{{ asset('images/recettes/'~recette.getImage) }}" alt="Card image cap" style="width: 50%">
+          {% endif %}
+          {{ recette.title }}
+          </a>
+        </td>
+        <td>{{ recette.createdAt|date('d/m/Y') }}</td>
+        <td>{{ recette.categorie }}</td>
+        <td>
+          <img class="card-img-top rounded-circle avatarMini"
+               src="{{ asset('images/userImage/'~recette.author.picture) }}"
+               alt="Card image cap">
+          {{ recette.author.surnom }}
+        </td>
+
+
+        <td>
+          <div class="row">
+
+            <a href="{{ path('admin_recette_edit', {'id': recette.id}) }}" class="btn btn-outline-dark btn-sm">
+              <i class="fa fa-edit"></i>
+            </a>
+
+
+            <a href="{{ path('admin_recette_delete', {'id': recette.id}) }}" class="btn btn-outline-danger btn-sm">
+              <i class="fa fa-trash"></i>
+            </a>
+
+
+          </div>
+        </td>
+
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>

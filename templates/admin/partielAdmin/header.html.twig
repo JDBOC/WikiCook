@@ -1,6 +1,6 @@
 <div class="header">
   <div class="hautHeader">
-    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-danger">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-warning">
       <a class="navbar-brand" href="{{ path('admin_dashboard') }}">
         <i class="fas fa-chart-line"></i>
         Dashboard
@@ -14,19 +14,19 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ path('admin_recette_index') }}">
               <i class="fa fa-book"></i>
-              Recettes <span class="sr-only">(current)</span>
+             {{ stats.totalRecettes }} Recettes <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ path('admin_user_index') }}">
               <i class="fas fa-users"></i>
-              Utilisateurs
+             {{ stats.totalUsers }} Utilisateurs
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ path('admin_comment_index') }}">
               <i class="fas fa-comments"></i>
-              Commentaires
+              {{ stats.totalComments }} Commentaires
             </a>
           </li>
         </ul>

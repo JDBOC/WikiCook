@@ -5,71 +5,77 @@
 {% block body %}
   <div class="container">
 
-    <div class="bg-light d-flex justify-content-center p-1">
+    <div class="bg-light">
 
-<div class="col-lg-12 ">
-  <h2 class="my-5 text-center pt-3 m-3">Administration des recettes</h2>
-      <table class="table-responsive-lg table-hover text-center m-auto">
-        <thead>
-        <tr>
-          <th>Id</th>
-          <th>Titre</th>
-          <th>Image</th>
-          <th>difficulté</th>
-          <th>catégorie</th>
-          <th>Nbre de personnes</th>
-          <th>Auteur</th>
-          <th>Note Moyenne</th>
-          <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for recette in recettes %}
+
+        <h2 class="my-5 text-center pt-3 m-3">Administration des recettes</h2>
+      <div class="d-flex justify-content-center p-1">
+        <table class="table table-responsive-lg table-hover text-center">
+          <thead>
           <tr>
-            <td>{{ recette.id }}</td>
-            <td>{{ recette.title }}</td>
-            <td>
-              {% if recette.cover is not null %}
-                <img class="card-img-top imgLittle" src="{{ recette.cover }}" alt="Card image cap">
-              {% else %}
-                <img class="card-img-top imgLittle" src="{{ asset('images/recettes/'~recette.getImage) }}" alt="Card image cap">
-              {% endif %}
-            </td>
-            <td><span class="badge badge-success rounded">{{ recette.difficulte }}</span></td>
-            <td>{{ recette.categorie }}</td>
-            <td><span class="badge badge-success rounded">{{ recette.nombre }}</span></td>
-
-            <td>
-              {% if recette.author is not null %}
-                <img src="{{ asset('images/userImage/'~recette.author.picture) }}"
-                     alt="Avatar de {{ recette.author.surnom }}"
-                     class="rounded-circle avatarMini">
-                {{ recette.author }}
-              {% else %}
-                <img src="{{ asset('images/userImage/Ambox_blue_question.svg.png') }}" alt="Auteur anonyme"
-                     class="avatarMini">
-
-              {% endif %}
-            </td>
-            <td>{{ recette.moyenneDesNotes }}</td>
-            <td>
-              <div class="row">
-              <a href="{{ path('admin_recette_edit', {'id': recette.id}) }}" class="btn btn-outline-dark">
-                <i class="fa fa-edit"></i>
-              </a>
-              <a href="{{ path('admin_recette_delete', {'id': recette.id}) }}" class="btn btn-outline-danger">
-                <i class="fa fa-trash"></i>
-              </a>
-              </div>
-            </td>
+            <th>Id</th>
+            <th>Titre</th>
+            <th>Image</th>
+            <th>difficulté</th>
+            <th>catégorie</th>
+            <th>Nbre de personnes</th>
+            <th>Auteur</th>
+            <th>Note Moyenne</th>
+            <th>Actions</th>
           </tr>
-        {% endfor %}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+          {% for recette in recettes %}
+            <tr>
+              <td>{{ recette.id }}</td>
+
+              <td>
+                <a href="{{ path('recette_show', {'slug': recette.slug}) }}" target="_blank">{{ recette.title }} </a></td>
+              <td>
+                <a href="{{ path('recette_show', {'slug': recette.slug}) }}" target="_blank">
+                {% if recette.cover is not null %}
+                  <img class="card-img-top imgLittle" src="{{ recette.cover }}" alt="Card image cap">
+                {% else %}
+                  <img class="card-img-top imgLittle" src="{{ asset('images/recettes/'~recette.getImage) }}"
+                       alt="Card image cap">
+                {% endif %}
+                </a>
+              </td>
+              <td><span class="badge badge-success rounded">{{ recette.difficulte }}</span></td>
+              <td>{{ recette.categorie }}</td>
+              <td><span class="badge badge-success rounded">{{ recette.nombre }}</span></td>
+
+              <td>
+                {% if recette.author is not null %}
+                  <img src="{{ asset('images/userImage/'~recette.author.picture) }}"
+                       alt="Avatar de {{ recette.author.surnom }}"
+                       class="rounded-circle avatarMini">
+                  {{ recette.author }}
+                {% else %}
+                  <img src="{{ asset('images/userImage/Ambox_blue_question.svg.png') }}" alt="Auteur anonyme"
+                       class="avatarMini">
+
+                {% endif %}
+              </td>
+              <td>{{ recette.moyenneDesNotes }}</td>
+              <td>
+                <div class="row">
+                  <a href="{{ path('admin_recette_edit', {'id': recette.id}) }}" class="btn btn-outline-dark">
+                    <i class="fa fa-edit"></i>
+                  </a>
+                  <a href="{{ path('admin_recette_delete', {'id': recette.id}) }}" class="btn btn-outline-danger">
+                    <i class="fa fa-trash"></i>
+                  </a>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
 
     </div>
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center mt-lg-3">
       <ul class="pagination">
         <li class="page-item {% if page == 1 %} disabled {% endif %}">
           <a class="page-link" href="{{ path('admin_recette_index', {'page': page - 1}) }}">&laquo;</a>

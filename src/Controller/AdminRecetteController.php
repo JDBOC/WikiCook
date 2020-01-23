@@ -24,6 +24,10 @@
      */
     public function index(RecetteRepository $repository , Pagination $pagination , $page = 1)
     {
+      $entityManager = $this->getDoctrine ()->getManager ();
+      $totalUsers = $entityManager->createQuery('SELECT COUNT(u) FROM App\Entity\User u')->getSingleScalarResult();
+      $totalRecettes = $entityManager->createQuery('SELECT COUNT(r) FROM App\Entity\Recette r')->getSingleScalarResult();
+      $totalComments = $entityManager->createQuery('SELECT COUNT(c) FROM App\Entity\Comment c')->getSingleScalarResult();
       $pagination ->setEntityClass ( Recette::class )
                   ->setPage ( $page )
                   ->setLimit ( 10 );
@@ -31,6 +35,7 @@
       $total = count ( $repository->findAll () );
       $pages = ceil ( $total / 10 );
       return $this->render ( 'admin/recetteAdmin/index.html.twig' , [
+        'stats' => compact ('totalUsers', 'totalRecettes', 'totalComments'),
         'recettes' => $recipes ,
         'pages' => $pages ,
         'page' => $page

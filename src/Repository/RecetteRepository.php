@@ -31,31 +31,15 @@ class RecetteRepository extends ServiceEntityRepository
   public function findByDate($limit)
   {
     return $this->createQueryBuilder ( 'r' )
-      ->select ( 'r as recette, r.createdAt as c' )
+      ->select ( 'r')
       ->groupBy ( 'r' )
-      ->orderBy ( 'c' , 'DESC' )
+      ->orderBy ( 'r.createdAt' , 'DESC' )
       ->setMaxResults ( $limit )
       ->getQuery ()
       ->getResult ();
   }
 
 
-
-  public function findBySearch($recherche): Query
-  {
-
-
-    $qb = $this->createQueryBuilder('r');
-    $qb->add('where', $qb->expr()->orX(
-      $qb->expr()->like('r.title', $recherche['recherche']),
-      $qb->expr()->like('r.ingredient', $recherche['recherche'])
-
-    ))
-      ->setParameter('recherche', $recherche['recherche'])
-      ->orderBy('r.title', 'DESC')
-    ;
-    return $qb->getQuery();
-  }
 
   public function findByRecherche($recherche)
   {
