@@ -15,6 +15,7 @@
     {
       $builder
         ->add ( 'recherche' , TextType::class , $this->getConfig ( ' ' , "indiquez une recette ou un ingrédient" ) )
+
         ->add ( 'soumettre' , SubmitType::class );
     }
 
