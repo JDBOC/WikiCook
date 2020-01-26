@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\SearchData;
 use App\Entity\Recette;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -54,6 +55,38 @@ class RecetteRepository extends ServiceEntityRepository
       ->getResult ();
 
 
+  }
+
+  /**
+   * test mise en place recherche avancée
+   * @return Recette[]
+   */
+  public function findSearch(SearchData $search): array
+  {
+    $query = $this
+      ->createQueryBuilder ('r')
+      ->select('c', 'r')
+      ->join ('r.categorie', 'c');
+
+    if (!empty($search->q)) {
+      $query = $query
+        ->andWhere ('r.title LIKE :q')
+        ->setParameter ('q', "%{$search->q}%");
+    }
+
+    if (!empty($search->max)) {
+      $query =$query
+        ->andWhere ('r.duration <= :max')
+        ->setParameter ('max', $search->max);
+    }
+
+    if (!empty($search->categories)) {
+      $query = $query
+        ->andWhere ('c.id IN (:categories)')
+        ->setParameter ('categories', $search->categories);
+    }
+
+    return $query->getQuery ()->getResult ();
   }
 }
 

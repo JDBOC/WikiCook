@@ -29,13 +29,16 @@
       if ($form->isSubmitted () && $form->isValid ()) {
         $recherche = $form->getData ();
         $terme = $recherche;
+
         $results = $recetteRepository->findByRecherche ( $recherche );
+        dd ($results);
         if (!$results) {
           $this->addFlash ( 'info' , strtoupper ( "aucun resultat pour cette recherche" ) );
           return $this->render ( 'search/index.html.twig' , [
             'categories' => $categorieRepository->findAll () ,
             'form' => $form->createView ()
           ] );
+
         }
         return $this->render ( 'search/results.html.twig' , [
           'categories' => $categorieRepository->findAll () ,
