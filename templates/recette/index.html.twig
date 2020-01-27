@@ -6,14 +6,27 @@
 
 
 
-  <div class="container">
+  <div class="container-fluid">
 
-    <h1 class="text-center titre text-dark">Liste des recettes</h1>
-    <div class="row overflow-auto">
+    <h2 class="text-center titre text-dark mt-md-5">Liste des recettes</h2>
+    <div class="row">
+      <div class="col-md-2 mt-lg-3">
+        {% include 'partiels/_search.html.twig' with {form: form} only %}
+      </div>
 
-      {% for recette in recettes %}
-        {% include 'partiels/_card.html.twig' %}
-      {% endfor %}
+      <div class="col-md-9">
+        <div class="grid">
+          <div class="row overflow-auto">
+            {% for recette in recettes %}
+
+              {% include 'partiels/_card.html.twig' with {recette: recette} %}
+
+            {% endfor %}
+          </div>
+
+
+        </div>
+    </div>
     </div>
 
   </div>

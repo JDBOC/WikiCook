@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recherche{% endblock %}
+
+{% block body %}
+  <div class="container-fluid">
+    <h2 class="text-center text-dark mt-md-5">Recherche</h2>
+   <div class="row">
+       <div class="col-md-2 mt-lg-3">
+
+{% include 'partiels/_search.html.twig' with {form: form} only%}
+
+       </div>
+       <div class="col-md-9 bg-transparent p-lg-3 rounded">
+
+           <div class="grid">
+               <div class="row overflow-auto">
+                   {% for recette in results %}
+
+                       {% include 'partiels/_card.html.twig' with {recette: recette} %}
+
+                   {% endfor %}
+               </div>
+
+
+           </div>
+       </div>
+   </div>
+
+    <div><a id="cRetour" class="cInvisible" href="#haut"><i class="far fa-arrow-alt-circle-up fa-2x"></i></a></div>
+  </div>
+{% endblock %}

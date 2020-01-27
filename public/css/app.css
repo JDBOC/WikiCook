@@ -61,7 +61,7 @@ a#cRetour{
     color:#fff;
     background: crimson;
     position:fixed;
-    right:10%;
+    right:5%;
     opacity:1;
     z-index:99999;
     transition:all ease-in 0.2s;
@@ -83,4 +83,19 @@ a#cRetour.cInvisible{
 a#cRetour.cVisible{
     bottom:20px;
     opacity:1;
+}
+
+/* RECHERCHE AVANCEE */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(4);
+    grid-gap: 20px;
+}
+
+.filter {
+
+    display: block;
+    position: sticky;
+    top: 15%;
 }

@@ -2,11 +2,13 @@
 
   namespace App\Controller;
 
+  use App\Data\SearchData;
   use App\Entity\Categorie;
   use App\Entity\Comment;
   use App\Entity\Recette;
   use App\Form\CommentType;
   use App\Form\RecetteType;
+  use App\Form\SearchForm;
   use App\Repository\CategorieRepository;
   use App\Repository\CommentRepository;
   use App\Repository\EtapeRepository;
@@ -35,23 +37,38 @@
      * @param CategorieRepository $categorieRepository
      * @return Response
      */
-    public function index(RecetteRepository $recetteRepository , $page , Pagination $pagination , CategorieRepository $categorieRepository): Response
+    public function index(RecetteRepository $recetteRepository , $page , Pagination $pagination , CategorieRepository $categorieRepository, Request $request): Response
     {
       $pagination->setEntityClass ( Recette::class )
         ->setPage ( $page )
         ->setLimit ( 12 );
-
       $recipes = $pagination->getData ();
-
-
       $total = count ( $recetteRepository->findAll () );
       $pages = ceil ( $total / 8 );
+
+
+      $data = new SearchData();
+      $form = $this->createForm (SearchForm::class, $data);
+      $form->handleRequest ($request);
+      $results = $recetteRepository->findSearch ($data);
+
+      if ($form -> isSubmitted ()&& $form->isValid ()) {
+        return $this->render ('search_tuto/index.html.twig', [
+          'categories' => $categorieRepository->findAll () ,
+          'form' => $form->createView (),
+          'recettes' => $recipes ,
+          'results' => $results,
+
+        ]);
+      }
 
       return $this->render ( 'recette/index.html.twig' , [
         'recettes' => $recipes ,
         'categories' => $categorieRepository->findAll () ,
         'pages' => $pages ,
-        'page' => $page
+        'page' => $page,
+        'form' => $form->createView (),
+        'results' => $results
       ] );
     }
 
