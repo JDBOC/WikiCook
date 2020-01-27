@@ -24,7 +24,7 @@ class SearchTutoController extends AbstractController
       $results = $recetteRepository->findSearch ($data);
         return $this->render('search_tuto/index.html.twig', [
           'categories' => $categorieRepository->findAll () ,
-            'recettes' => $results,
+            'results' => $results,
             'form' => $form->createView ()
         ]);
     }

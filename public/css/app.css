@@ -61,7 +61,7 @@ a#cRetour{
     color:#fff;
     background: crimson;
     position:fixed;
-    right:10%;
+    right:5%;
     opacity:1;
     z-index:99999;
     transition:all ease-in 0.2s;
@@ -94,7 +94,6 @@ a#cRetour.cVisible{
 }
 
 .filter {
-    background-color: palevioletred;
 
     display: block;
     position: sticky;

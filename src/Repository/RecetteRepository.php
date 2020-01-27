@@ -67,25 +67,21 @@ class RecetteRepository extends ServiceEntityRepository
       ->createQueryBuilder ('r')
       ->select('c', 'r')
       ->join ('r.categorie', 'c');
-
     if (!empty($search->q)) {
       $query = $query
         ->andWhere ('r.title LIKE :q')
         ->setParameter ('q', "%{$search->q}%");
     }
-
     if (!empty($search->max)) {
       $query =$query
         ->andWhere ('r.duration <= :max')
         ->setParameter ('max', $search->max);
     }
-
     if (!empty($search->categories)) {
       $query = $query
         ->andWhere ('c.id IN (:categories)')
         ->setParameter ('categories', $search->categories);
     }
-
     return $query->getQuery ()->getResult ();
   }
 }
