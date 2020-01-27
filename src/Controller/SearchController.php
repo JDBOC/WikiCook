@@ -33,7 +33,7 @@
         $results = $recetteRepository->findByRecherche ( $recherche );
         dd ($results);
         if (!$results) {
-          $this->addFlash ( 'info' , strtoupper ( "aucun resultat pour cette recherche" ) );
+          $this->addFlash ( 'success' , strtoupper ( "aucun resultat pour cette recherche" ) );
 
           return $this->render ( 'search/index.html.twig' , [
             'categories' => $categorieRepository->findAll () ,

@@ -1,22 +1,28 @@
 
 {{ form_start(form, {attr: {class: 'filter'}}) }}
 <div class="card border-dark mb-3" style="max-width: 20rem;">
-  <div class="card-header"><h4 class="text-dark text-center">Recherche</h4></div>
+
+  <div class="card-header bg-dark"><h4 class="text-white text-center">Recherche</h4></div>
+
   <div class="card-body">
 
 <div class="">
 {{ form_row(form.q) }}
 <h5 class="text-dark">Catégories</h5>
 {{ form_row(form.categories) }}
-<h5 class="text-dark">Durée</h5>
-<div class="row">
+<h5 class="text-dark">D'une durée maximale de...</h5>
+
 
   <div class="col-md-12">
     {{ form_row(form.max) }}
   </div>
+  <h5 class="text-dark">Avec au moins la note de...</h5>
+    <div class="col-md-12">
+    {{ form_row(form.note) }}
+
 </div>
 
-  <button type="submit" class="btn btn-outline-dark">Rechercher</button>
+  <button type="submit" class="btn btn-dark">Rechercher</button>
 </div>
 
 {{ form_end(form) }}

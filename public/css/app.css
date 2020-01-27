@@ -52,6 +52,11 @@ margin-top: 15%;
 .avatar{
     max-width: 100px;
 }
+
+.cardHeader{
+    color: #772953;
+
+}
 /* BOUTON RETOUR EN HAUT DE PAGE */
 a#cRetour{
     border-radius:3px;
@@ -99,3 +104,4 @@ a#cRetour.cVisible{
     position: sticky;
     top: 15%;
 }
+

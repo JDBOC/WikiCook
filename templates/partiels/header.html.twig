@@ -33,7 +33,7 @@
       <div class="ml-md-5">
         <form class="form-inline my-2 my-lg-0">
           <div class="search">
-            <a href="{{ url('search_tuto') }}">
+            <a href="{{ url('search_advanced') }}">
               <i class="fas fa-search text-white"></i>
             </a>
           </div>
@@ -75,13 +75,18 @@
 
   {% for label, messages in app.flashes %}
   <div class="container">
+<div class="row">
+  <div class="col-lg-3">&nbsp;</div>
 
-    <div class="alert alert-{{ label }} col-lg-8 m-auto">
+    <div class="col-lg-9">
+    <div class="alert alert-{{ label }} col-lg-10">
       {% for message in messages %}
         <p class="text-center text-dark font-weight-bold">{{ message | raw }}</p>
       {% endfor %}
     </div>
-  </div>
-
+    </div>
 </div>
-{% endfor %}
+  </div>
+</div>
+  {% endfor %}
+

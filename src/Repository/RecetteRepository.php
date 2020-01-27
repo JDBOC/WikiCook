@@ -65,8 +65,9 @@ class RecetteRepository extends ServiceEntityRepository
   {
     $query = $this
       ->createQueryBuilder ('r')
-      ->select('c', 'r')
-      ->join ('r.categorie', 'c');
+      ->select('c', 'r', 'n')
+      ->join ('r.categorie', 'c')
+      ->join ('r.comments', 'n');
     if (!empty($search->q)) {
       $query = $query
         ->andWhere ('r.title LIKE :q')
@@ -81,6 +82,11 @@ class RecetteRepository extends ServiceEntityRepository
       $query = $query
         ->andWhere ('c.id IN (:categories)')
         ->setParameter ('categories', $search->categories);
+    }
+    if (!empty($search->note)){
+      $query = $query
+        ->andWhere ('n.note >= (:note)')
+        ->setParameter ('note', $search->note);
     }
     return $query->getQuery ()->getResult ();
   }

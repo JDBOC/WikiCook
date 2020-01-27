@@ -38,9 +38,19 @@
           'label' => false,
           'required' => false,
           'attr' => [
-            'placeholder' => 'durée max'
+            'placeholder' => 'En minutes'
           ]
         ])
+
+        ->add ('note', NumberType::class, [
+          'label' => false,
+          'required' => false,
+          'attr' => [
+            'placeholder' => "note minimum"
+          ]
+        ])
+
+
 
 
 

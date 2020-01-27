@@ -28,5 +28,8 @@
      */
     public $min;
 
-
+    /*
+     * @var null|integer
+     */
+    public $note;
   }
